@@ -33,14 +33,15 @@ class ProductManager {
     }
 
     showArray() {
-        this.products.map((product) => {
+        return this.products;
+        /*this.products.map((product) => {
             console.log("Id: " + product.id);
             console.log("Código: " + product.code);
             console.log("Nombre: " + product.title);
             console.log("Descripción: " + product.description);
             console.log("Precio: " + product.price);
             console.log("Stock: " + product.stock);
-        })
+        })*/
     }
 
     getProductById(lookForId) {
@@ -80,7 +81,7 @@ const readline = require('readline');
 const menuSelector = async () => {
     let option;
     do {
-        console.log("\n\nMenú de Opciones: \n1_ Agregar un nuevo producto\n2_ Ver todos los Productos\n3_ Buscar Producto por código\n9_ Salir");
+        console.log("\n\nMenú de Opciones: \n1_ Agregar un nuevo producto\n2_ Ver todos los Productos\n3_ Buscar Producto por código\n4_ Modificar Producto\n5_ Eliminar Producto\n9_ Salir");
         option = parseInt(await promptUser("para el menú de opciones"));
 
         switch (option) {
@@ -97,6 +98,12 @@ const menuSelector = async () => {
             case 3:
                 let lookForId = parseInt(await promptUser("Id a buscar"));
                 productManager.getProductById(lookForId);
+                break;
+            case 4:
+                console.log("Modificar Productos");
+                break;
+            case 5:
+                console.log("Eliminar Productos");
                 break;
             case 9:
                 console.log("Adiós...");
@@ -119,7 +126,7 @@ const loadNewProduct = async () => {
 
     let codeFlag = false;
     do {
-        code = parseInt(await promptUser("mayor a 0 para código\n"));
+        code = parseInt(await promptUser("\nmayor a 0 para código"));
         codeFlag = productManager.existCode(code);
         if (codeFlag === true)
             console.log("El código ya existe, ingrese uno diferente\n")
