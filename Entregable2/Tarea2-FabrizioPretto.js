@@ -1,11 +1,15 @@
+const fs = require('fs');
+
 class ProductManager {
 
     constructor() {
         this.events = [];
         this.products = [];
+        this.path = './products.json'
     }
 
-    addProduct(code, title, description, price, stock) {
+    async addProduct(code, title, description, price, stock) {
+
         const product = {
             code,
             id: this.getMaxId() + 1,
@@ -15,7 +19,13 @@ class ProductManager {
             thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU",
             stock
         };
-        this.products.push(product);
+        try {
+            const products = await this.getProducts();
+            products.push(product);
+            await fs.promises.writeFile(this.path, JSON.stringify(products));
+        } catch (error) {
+            console.log(error);
+        }
         console.log("Se cargó correctamente el producto");
     }
 
@@ -32,17 +42,27 @@ class ProductManager {
         return this.products.some(product => product.code === n);
     }
 
-    showArray() {
-        return this.products;
-        /*this.products.map((product) => {
-            console.log("Id: " + product.id);
-            console.log("Código: " + product.code);
-            console.log("Nombre: " + product.title);
-            console.log("Descripción: " + product.description);
-            console.log("Precio: " + product.price);
-            console.log("Stock: " + product.stock);
-        })*/
-    }
+    async getProducts() {
+
+        try {
+            if (fs.existsSync(this.path)) {
+                const usersJSON = await fs.promises.readFile(this.path, 'utf-8');
+                return JSON.parse(usersJSON);
+            } else return [];
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    /*this.products.map((product) => {
+        console.log("Id: " + product.id);
+        console.log("Código: " + product.code);
+        console.log("Nombre: " + product.title);
+        console.log("Descripción: " + product.description);
+        console.log("Precio: " + product.price);
+        console.log("Stock: " + product.stock);
+    })*/
+
 
     getProductById(lookForId) {
         //let lookForId = document.getElementById("lookForCode").value;
@@ -89,8 +109,9 @@ const menuSelector = async () => {
                 await loadNewProduct();
                 break;
             case 2:
-                if (productManager.products.length !== 0) {
-                    productManager.showArray();
+                let actualArray = productManager.getProducts();
+                if (actualArray.length !== 0) {
+                    console.log("El listado de productos es:\n", await productManager.getProducts());
                 } else {
                     console.log("\n\nNo existen productos cargados...");
                 }
@@ -135,19 +156,19 @@ const loadNewProduct = async () => {
 
     do {
         title = await promptUser("distinto de vacío para nombre\n");
-    } while (title === undefined && title === "");
+    } while (title === undefined || title === "");
 
     do {
         description = await promptUser("distinto de vacío para la descripción\n");
-    } while (description === undefined && description === "");
+    } while (description === undefined || description === "");
 
     do {
         price = await promptUser("mayor a 0 para el precio\n");
-    } while (price === undefined && price <= 0);
+    } while (price === undefined || price <= 0);
 
     do {
         stock = await promptUser("mayor a 0 para el stock\n");
-    } while (stock === undefined && stock <= 0);
+    } while (stock === undefined || stock <= 0);
 
 
     productManager.addProduct(code, title, description, price, stock);
