@@ -126,7 +126,7 @@ const loadNewProduct = async () => {
 
     let codeFlag = false;
     do {
-        code = parseInt(await promptUser("\nmayor a 0 para código"));
+        code = parseInt(await promptUser("mayor a 0 para código\n"));
         codeFlag = productManager.existCode(code);
         if (codeFlag === true)
             console.log("El código ya existe, ingrese uno diferente\n")

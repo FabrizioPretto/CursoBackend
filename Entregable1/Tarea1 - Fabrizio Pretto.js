@@ -128,19 +128,19 @@ const loadNewProduct = async () => {
 
     do {
         title = await promptUser("distinto de vacío para nombre\n");
-    } while (title === undefined && title === "");
+    } while (title === undefined || title === "");
 
     do {
         description = await promptUser("distinto de vacío para la descripción\n");
-    } while (description === undefined && description === "");
+    } while (description === undefined || description === "");
 
     do {
         price = await promptUser("mayor a 0 para el precio\n");
-    } while (price === undefined && price <= 0);
+    } while (price === undefined || price <= 0);
 
     do {
         stock = await promptUser("mayor a 0 para el stock\n");
-    } while (stock === undefined && stock <= 0);
+    } while (stock === undefined || stock <= 0);
 
 
     productManager.addProduct(code, title, description, price, stock);
