@@ -12,7 +12,7 @@ class ProductManager {
 
         const product = {
             code,
-            id: this.getMaxId() + 1,
+            id: await this.getMaxId() + 1,
             title,
             description,
             price,
@@ -29,14 +29,16 @@ class ProductManager {
         console.log("Se cargó correctamente el producto");
     }
 
-    getMaxId() {
-        let maxId = 0;
-        this.products.map((product) => {
-            if (product.id > maxId)
-                maxId = product.id;
-        })
-        return maxId;
-    };
+    async getMaxId() {
+        try {
+            const products = await this.getProducts();
+            const maxId = products.reduce((max, product) => (product.id > max ? product.id : max), 0);
+            return maxId;
+        } catch (error) {
+            console.log(error);
+            return 0;
+        }
+    }
 
     existCode(n) {
         return this.products.some(product => product.code === n);
@@ -54,17 +56,43 @@ class ProductManager {
         }
     };
 
-    getProductById(lookForId) {
+    async getProductById(lookForId) {
 
-        let actualArray = this.getProducts()
+        let actualArray = await this.getProducts()
 
-        console.log(actualArray);
-
-        //let lookForId = document.getElementById("lookForCode").value;
         if (lookForId <= 0 || lookForId > actualArray.length)
-            console.log("Id no encontrado");
+            return console.log("Id no encontrado");
         else {
-            console.log("Se encontró el producto con el Id ingresado " + actualArray[lookForId - 1])
+            return JSON.stringify(actualArray[lookForId - 1])
+        }
+    }
+
+    async updateProduct(updateId, updatefield) {
+        let actualArray = await this.getProducts();
+        let productToUpdate = actualArray.find(product => product.id === updateId);
+
+    }
+
+    async deleteProduct(deleteId) {
+        let actualArray = await this.getProducts();
+        if (actualArray.length === 0) {
+            console.log("Aún no existen productos cargados");
+            return;
+        }
+
+        let position = actualArray.findIndex(product => product.id === deleteId);
+        if (position === -1) {
+            console.log("Producto no encontrado con el Id ingresado");
+            return;
+        }
+
+        actualArray.splice(position, 1);
+
+        try {
+            await fs.promises.writeFile(this.path, JSON.stringify(actualArray));
+            console.log("Producto eliminado correctamente");
+        } catch (error) {
+            console.log(error);
         }
     }
 }
@@ -108,13 +136,16 @@ const menuSelector = async () => {
                 break;
             case 3:
                 let lookForId = parseInt(await promptUser("Id a buscar"));
-                productManager.getProductById(lookForId);
+                console.log(await productManager.getProductById(lookForId));
                 break;
             case 4:
-                console.log("Modificar Productos");
+                let updateId = parseInt(await promptUser("Id de producto a modificar"));
+                let updatefield = await promptUser("Campo de producto a modificar");
+                productManager.updateProduct(updateId, updatefield);
                 break;
             case 5:
-                console.log("Eliminar Productos");
+                let deleteId = parseInt(await promptUser("Id a eliminar"));
+                productManager.deleteProduct(deleteId);
                 break;
             case 9:
                 console.log("Adiós...");
