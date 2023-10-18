@@ -54,27 +54,17 @@ class ProductManager {
         }
     };
 
-    /*this.products.map((product) => {
-        console.log("Id: " + product.id);
-        console.log("Código: " + product.code);
-        console.log("Nombre: " + product.title);
-        console.log("Descripción: " + product.description);
-        console.log("Precio: " + product.price);
-        console.log("Stock: " + product.stock);
-    })*/
-
-
     getProductById(lookForId) {
+
+        let actualArray = this.getProducts()
+
+        console.log(actualArray);
+
         //let lookForId = document.getElementById("lookForCode").value;
-        if (lookForId <= 0 || lookForId > this.products.length)
+        if (lookForId <= 0 || lookForId > actualArray.length)
             console.log("Id no encontrado");
         else {
-            console.log("Id: " + this.products[lookForId - 1].id);
-            console.log("Código: " + this.products[lookForId - 1].code);
-            console.log("Nombre: " + this.products[lookForId - 1].title);
-            console.log("Descripción: " + this.products[lookForId - 1].description);
-            console.log("Precio: " + this.products[lookForId - 1].price);
-            console.log("Stock: " + this.products[lookForId - 1].stock);
+            console.log("Se encontró el producto con el Id ingresado " + actualArray[lookForId - 1])
         }
     }
 }
