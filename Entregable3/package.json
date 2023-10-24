@@ -5,7 +5,7 @@
   "main": "Tarea3-FabrizioPretto.js",
   "type": "module",
   "scripts": {
-    "dev:express": "node --watch ."
+    "dev:express": "node --watch Tarea3-FabrizioPretto.js"
   },
   "keywords": [],
   "author": "",
