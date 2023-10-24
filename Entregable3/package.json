@@ -1,0 +1,16 @@
+{
+  "name": "entregable3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Tarea3-FabrizioPretto.js",
+  "type": "module",
+  "scripts": {
+    "dev:express": "node --watch ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
