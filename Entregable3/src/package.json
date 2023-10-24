@@ -2,10 +2,10 @@
   "name": "entregable3",
   "version": "1.0.0",
   "description": "",
-  "main": "Tarea3-FabrizioPretto.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev:express": "node --watch Tarea3-FabrizioPretto.js"
+    "dev:express": "node --watch app.js"
   },
   "keywords": [],
   "author": "",
