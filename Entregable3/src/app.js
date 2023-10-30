@@ -19,7 +19,6 @@ app.get('/home', (req, res) => {
 app.get('/products', async (req, res) => {
 
     const { limit } = req.query;
-    //HACER CON SPLICE() --Hecho
 
     const products = await productManager.getProducts()
 
@@ -38,12 +37,12 @@ app.get('/products', async (req, res) => {
 })
 
 
-//REVEER
+
 app.post('/products', async (req, res) => {
     try {
         const product = { ...req.body }
         const productCreated = await productManager.addProduct(product);
-        res.status(200).json(productCreated);
+        res.status(200).json({ message: "Se creó correctamente el producto: " + productCreated.title });
     } catch (error) {
         res.status(500).json(error.message);
     }
@@ -55,10 +54,10 @@ app.get("/products/:id", async (req, res) => {
 
     const product = await productManager.getProductById(Number(id));
 
-    if (product === undefined) res.status(404).json({ message: 'Producto no encontrado' });
+    if (product === undefined || product === false) res.status(404).json({ message: 'Producto no encontrado' });
     else res.status(200).json(product);
 })// else res.status(200).json(JSON.parse(product));
-//
+
 
 app.delete('/products/:id', async (req, res) => {
     try {
