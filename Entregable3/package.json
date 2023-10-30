@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev:express": "node --watch app.js"
+    "dev:express": "node --watch src/app.js"
   },
   "keywords": [],
   "author": "",
