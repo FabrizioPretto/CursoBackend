@@ -1,1 +1,33 @@
-[{"id":1,"firstname":"Juan","lastname":"Perez","user":"juanp","password":"fb4c5efdb971782814412af5fcdc3cf364ebd1aa7fe9ea6d85d9f28224ca09b9","salt":"�׼�*\"4\\�a˖YLX�k�ڇl�Q\u00052>�@Ef\u001c�!8\u001b����w�U)��͌�_Ja��.���� C���\u0004�TE\u0013�.U�C͟���Ŵ�۹�\u0018*��\u001dKS*g��칔\u0002\b\u0006[�X\n*�5,��ALN\u001e�Wk�s��в�"},{"firstname":"Juan","lastname":"Perez","username":"juancitop2023","password":"1234","id":2},{"id":3,"firstname":"Juan","lastname":"Perez","username":"juanp","password":"4637240a46c26baccc58bb644ab7af259422205849da6be1d8182e0406060014","salt":"����\u0012����\u0007��yQx ��\u0013\u0000��z\u0007\n�\\c'9�ԉ;��%HB@����X\u0012O\r��j�2\u000b��m�\u001d\u0007\\�Qq㾆\u0000\u0000̋5\u0019���px�\u0006\u0013��\b�#~4\u0019���m�� �m!���ֿñK%�2Й��`��9\u0018��+\u001d@\u0018"},{"id":4,"firstname":"Juan","lastname":"Perez","username":"juanp","password":"e66e0826428bcb362aed17ba3f56f6395fbe31d90b8c8b23979a9979d34b9476","salt":"�ٮ]�wą%:�\u001a��3� m1N.B�\u0002&?'{pM�8a_S��ԭs��ݷ�ٟ\u0003�J����jm.\u001d�E\u000e������Q���b�*P�����+�<.&z\u0004\u000ek�c�8��\u0003�.�ޫ��%�\u0016\u000f�Q\r�U�\u000egs��P\u0016���'�"}]
+[
+    {
+        "id": 1,
+        "firstname": "Juan",
+        "lastname": "Perez",
+        "user": "juanp",
+        "password": "fb4c5efdb971782814412af5fcdc3cf364ebd1aa7fe9ea6d85d9f28224ca09b9",
+        "salt": "�׼�*\"4\\�a˖YLX�k�ڇl�Q\u00052>�@Ef\u001c�!8\u001b����w�U)��͌�_Ja��.���� C���\u0004�TE\u0013�.U�C͟���Ŵ�۹�\u0018*��\u001dKS*g��칔\u0002\b\u0006[�X\n*�5,��ALN\u001e�Wk�s��в�"
+    },
+    {
+        "firstname": "Juan",
+        "lastname": "Perez",
+        "username": "juancitop2023",
+        "password": "1234",
+        "id": 2
+    },
+    {
+        "id": 3,
+        "firstname": "Juan",
+        "lastname": "Perez",
+        "username": "juanp",
+        "password": "4637240a46c26baccc58bb644ab7af259422205849da6be1d8182e0406060014",
+        "salt": "����\u0012����\u0007��yQx ��\u0013\u0000��z\u0007\n�\\c'9�ԉ;��%HB@����X\u0012O\r��j�2\u000b��m�\u001d\u0007\\�Qq㾆\u0000\u0000̋5\u0019���px�\u0006\u0013��\b�#~4\u0019���m�� �m!���ֿñK%�2Й��`��9\u0018��+\u001d@\u0018"
+    },
+    {
+        "id": 4,
+        "firstname": "Juan",
+        "lastname": "Perez",
+        "username": "juanp",
+        "password": "e66e0826428bcb362aed17ba3f56f6395fbe31d90b8c8b23979a9979d34b9476",
+        "salt": "�ٮ]�wą%:�\u001a��3� m1N.B�\u0002&?'{pM�8a_S��ԭs��ݷ�ٟ\u0003�J����jm.\u001d�E\u000e������Q���b�*P�����+�<.&z\u0004\u000ek�c�8��\u0003�.�ޫ��%�\u0016\u000f�Q\r�U�\u000egs��P\u0016���'�"
+    }
+]
