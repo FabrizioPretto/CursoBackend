@@ -1,0 +1,110 @@
+[
+    {
+        "id": 1,
+        "title": "taza",
+        "description": "pequeña",
+        "code": "1",
+        "price": "500",
+        "status": true,
+        "stock": "50",
+        "category": "bazar",
+        "thumbnail": "https://cdn.elementi.com.ar/wp-content/uploads/2020/08/29193035/5eb1ec8b60f97.jpg.webp"
+    },
+    {
+        "id": 2,
+        "title": "mate",
+        "description": "mediano",
+        "code": "2",
+        "price": "500",
+        "stock": "20",
+        "category": "bazar"
+    },
+    {
+        "id": 3,
+        "title": "bombilla",
+        "description": "pequeña",
+        "code": "3",
+        "price": "400",
+        "status": true,
+        "stock": "50",
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmNNLw2hKCL_QjWzDGGRan9HPbmnTeClImGhio-DvRs68KqwD77lL9xvzhUb4wqYtPIQs"
+    },
+    {
+        "id": 4,
+        "title": "termo",
+        "description": "grande",
+        "code": "4",
+        "price": "5000",
+        "status": true,
+        "stock": "10",
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcOnqfJHq4UkmPvampU-IbQAEhgk-wcRVmKA"
+    },
+    {
+        "id": 5,
+        "title": "plato",
+        "description": "mediano",
+        "code": "5",
+        "price": "800",
+        "status": true,
+        "stock": "30",
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ6aiX6NxLZbMlIK0_xIcPPcFc2zGjvnutKQ"
+    },
+    {
+        "id": 6,
+        "title": "cenicero",
+        "description": "mediano",
+        "code": "6",
+        "price": "700",
+        "status": true,
+        "stock": "20",
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGHVjRjwtyKNM77tzc1EPweZLMgBFkKFP7Yw"
+    },
+    {
+        "id": 7,
+        "title": "vaso",
+        "description": "mediano",
+        "code": "7",
+        "price": "900",
+        "status": true,
+        "stock": "20",
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZha7uSAnkCjD_d6zx8kff4isNAujktTezh3DUW4oFzE50bCzBKXoHLhVB6-8w5ujXZkY"
+    },
+    {
+        "id": 8,
+        "title": "tenedor",
+        "description": "pequeña",
+        "code": "8",
+        "price": "500",
+        "status": true,
+        "stock": "50",
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToV7u1pGf_g6kzqNvs6EiG88JvCXyXCHJu2g"
+    },
+    {
+        "id": 9,
+        "title": "cuchillo",
+        "description": "pequeña",
+        "code": "9",
+        "price": "500",
+        "status": true,
+        "stock": "50",
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp2jPIc5dD7dcJykaRPsPkYSO30GZ5gWlLMA"
+    },
+    {
+        "id": 10,
+        "title": "cuchara",
+        "description": "pequeña",
+        "code": "10",
+        "price": "500",
+        "status": true,
+        "stock": "50",
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcv0O9pnrzk6pxmq9zi_Wgia9RWr3Ggj7ufA"
+    }
+]

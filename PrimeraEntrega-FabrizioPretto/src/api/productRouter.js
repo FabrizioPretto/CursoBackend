@@ -1,37 +1,13 @@
-import express, { json } from 'express';
-import productRouter from './api/productRouter.js';
-import cartRouter from './api/cartRouter.js'
+import { Router } from "express";
+const router = Router();
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-/*app.use('/products', userRouter);
-app.use('/cart', cartRouter);*/
+import { ProductManager } from "../manager/productManager.js";
+const productManager = new ProductManager("./src/products.json")
 
-app.use('/api/products', productRouter);
-app.use('/api/cart', cartRouter);
+//router.use(router.json());
+//router.use(router.urlencoded({ extended: true }));
 
-
-//AGREGAR LA RUTA DE api/products y api/cart
-//Middleware que valide los campos (ojo porque ya existe una validación)
-
-const PORT = 8080;
-
-app.listen(PORT, () => console.log(`Server ok on port ${PORT}`));
-
-
-
-/*
-
-app.get('/', (req, res) => {
-    res.send("Mi primer servidor con express");
-})
-
-app.get('/home', (req, res) => {
-    res.send("Bienvenido");
-})
-
-app.get('/products', async (req, res) => {
+router.get('/', async (req, res) => {
 
     const { limit } = req.query;
 
@@ -52,8 +28,8 @@ app.get('/products', async (req, res) => {
 })
 
 
-
-app.post('/products', async (req, res) => {
+//router.post('/', productValidator, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const product = { ...req.body }
         const productCreated = await productManager.addProduct(product);
@@ -65,7 +41,7 @@ app.post('/products', async (req, res) => {
 })
 
 
-app.get("/products/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     const { id } = req.params;
 
     const product = await productManager.getProductById(Number(id));
@@ -75,7 +51,7 @@ app.get("/products/:id", async (req, res) => {
 })// else res.status(200).json(JSON.parse(product));
 
 
-app.delete('/products/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const idNumber = Number(id)
@@ -86,7 +62,7 @@ app.delete('/products/:id', async (req, res) => {
     }
 })
 
-app.put('/products/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
 
     try {
         const product = { ...req.body }
@@ -104,4 +80,6 @@ app.put('/products/:id', async (req, res) => {
         res.status(500).json(error.message);
     }
 })
-*/
+
+
+export default router;
