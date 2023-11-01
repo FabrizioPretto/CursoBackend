@@ -11,7 +11,6 @@ app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 
 
-
 const PORT = 8080;
 
 app.listen(PORT, () => console.log(`Server ok on port ${PORT}`));
