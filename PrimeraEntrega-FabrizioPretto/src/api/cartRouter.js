@@ -2,16 +2,16 @@ import { Router } from "express";
 const router = Router();
 
 import { CartManager } from "../manager/cartManager.js";
-const cartManager = new CartManager('./src/carts.json')
+const cartManager = new CartManager('./src/carts.json');
 
 import { ProductManager } from "../manager/productManager.js";
-const productManager = new ProductManager("./src/products.json")
+const productManager = new ProductManager("./src/products.json");
 
 
 router.post('/', async (req, res) => {
     try {
         const cartCreated = await cartManager.createCart();
-        console.log(cartCreated);
+        console.log(JSON.stringify(cartCreated));
         res.status(200).json({ message: `Se creó correctamente el carrito:  ` + JSON.stringify(cartCreated) });
     } catch (error) {
         res.status(500).json(error.message);
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 router.get('/:cid', async (req, res) => {
     const { cid } = req.params;
     const cart = await cartManager.getCartById(Number(cid));
-
+    console.log("El cart del get " + cart);
     if (cart === undefined || cart === false) res.status(404).json({ message: 'Carrito no encontrado' });
     else res.status(200).json(cart);
 

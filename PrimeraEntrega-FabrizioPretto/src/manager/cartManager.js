@@ -69,23 +69,32 @@ export class CartManager {
 
     }
 
-
     async getMaxId() {
+        let maxId = 0;
+        const carts = await this.getCarts();
+        console.log("El length " + carts.length);
+        /*carts.map((eachCart) => {
+            if (eachCart.id > maxId) maxId = eachCart.id;
+        });*/
+        return maxId;
+    }
+    /*async getMaxId() {
         try {
             const carts = await this.getCarts();
-            const maxId = carts.reduce((max, item) => (item.id > max ? item.id : max), 0);
+            console.log("carts " + carts);
+            const maxId = carts.reduce((max, product) => (product.id > max ? product.id : max), 0);
             return maxId;
         } catch (error) {
             console.log(error);
             return 0;
         }
-    }
+    }*/
 
     async getCartById(cid) {
 
         const cartsArray = await this.getCarts()
 
-        if (cartsArray === undefined) return false;
+        if (cartsArray === undefined || cartsArray.length <= 0) return false;
         else {
             const found = cartsArray.find((element) => element.id === cid);
 
@@ -97,5 +106,6 @@ export class CartManager {
             }
         }
     }
+
 
 }
