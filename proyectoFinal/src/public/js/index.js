@@ -38,7 +38,7 @@ function clean() {
     inputCategory.value = '';
 }
 
-socketClient.on('arrayProducts', (productsArray) => {
+socketClient.on('arrayProducts', async (productsArray) => {
 
     let infoProducts = '';
     productsArray.forEach(p => {
@@ -46,7 +46,26 @@ socketClient.on('arrayProducts', (productsArray) => {
     });
     products.innerHTML = infoProducts;
     console.log(productsArray);
+    let productsList = document.getElementById('productsList');
+    let lastProduct = productsList[productsList.lenght]
+    productsList.append(`<li>
+            <div class="col">
+            <div class="card" style="width: 12em;" style="height:12em; border-radius:2px" >
+            <img src="${lastProduct.thumbnail}" style="height: 50px; width: 50px; text-decoration: none;" class="card-img-top" alt="${lastProduct.title}">
+            <div class="card-body">
+            <h5 class="card-title">Producto: ${lastProduct.title}</h5>
+            <p class="card-text">Descripción: ${lastProduct.description}</p>
+            <p class="card-text">Código: ${lastProduct.code}</p>
+            <p class="card-text">Precio: $${lastProduct.price}</p>
+            <p class="card-text">Stock: ${lastProduct.stock}</p>
+            <p class="card-text">Categoría: ${lastProduct.category}</p>
+            </div>
+            </div>
+            </div>
+        </li></br>`)
+    /*
 
+    */
 })
 
 /*
