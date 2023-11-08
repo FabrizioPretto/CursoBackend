@@ -7,7 +7,7 @@ import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
 import { ProductManager } from "./manager/productManager.js";
-const productManager = new ProductManager('./files/products.json');
+const productManager = new ProductManager('./src/files/products.json');
 
 
 const app = express();
@@ -31,7 +31,7 @@ const httpServer = app.listen(PORT, () =>
 
 const socketServer = new Server(httpServer);
 
-const products = [];
+//const products = [];
 
 socketServer.on('connection', (socket) => {
     console.log(`Usuario conectado ${socket.id}`);
@@ -39,7 +39,7 @@ socketServer.on('connection', (socket) => {
     socket.on('disconnect', () => console.log(`Usuario desconectado ${socket.id}`));
 
     socket.on('newProduct', async (product) => {
-        await productManager.addProduct(product);
+        const newProduct = await productManager.addProduct(product);
         //products.push(product);
         socketServer.emit('arrayProducts', await productManager.getProducts());
     })

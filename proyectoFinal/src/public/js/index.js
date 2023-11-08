@@ -39,17 +39,18 @@ function clean() {
 }
 
 socketClient.on('arrayProducts', (productsArray) => {
+
     let infoProducts = '';
     productsArray.forEach(p => {
         infoProducts += `${p.title} - ${p.description} - ${p.code} - $${p.price} - ${p.stock} - ${p.category} </br>`
     });
     products.innerHTML = infoProducts;
-
+    console.log(productsArray);
 
 })
 
 /*
-socketClient.on('offer', async (msg) => {
+socketClient.on('arrayProducts', async (msg) => {
     console.log(msg);
 
 });*/
