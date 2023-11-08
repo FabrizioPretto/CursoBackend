@@ -18,7 +18,8 @@
         "code": "2",
         "price": "1500",
         "stock": "10",
-        "category": "bazar"
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT22U9cUEA4xePR_riTWyJln54nriQ0j9zZ5i7js0PgRxX_AgunNn5jK9MSlhHiQBVeJ8"
     },
     {
         "id": 3,
