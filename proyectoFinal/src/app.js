@@ -6,7 +6,8 @@ import viewHomeRouter from './api/viewHomeRouter.js';
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
-
+import { ProductManager } from "./manager/productManager.js";
+const productManager = new ProductManager('./files/products.json');
 
 
 const app = express();
@@ -37,11 +38,12 @@ socketServer.on('connection', (socket) => {
 
     socket.on('disconnect', () => console.log(`Usuario desconectado ${socket.id}`));
 
-    socket.emit('offer', `GRAN DESCUENTO EN LAS PRÓXIMAS 2 HS`)
-
-    socket.on('newProduct', (product) => {
-        products.push(product);
-        socketServer.emit('arrayProducts', products);
+    socket.on('newProduct', async (product) => {
+        await productManager.addProduct(product);
+        //products.push(product);
+        socketServer.emit('arrayProducts', await productManager.getProducts());
     })
+
+    //socket.emit('offer',)
 
 });

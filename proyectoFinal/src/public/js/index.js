@@ -1,9 +1,6 @@
 const socketClient = io();
 
-socketClient.on('offer', async (msg) => {
-    console.log(msg);
 
-});
 
 
 const form = document.getElementById('form');
@@ -47,4 +44,12 @@ socketClient.on('arrayProducts', (productsArray) => {
         infoProducts += `${p.title} - ${p.description} - ${p.code} - $${p.price} - ${p.stock} - ${p.category} </br>`
     });
     products.innerHTML = infoProducts;
+
+
 })
+
+/*
+socketClient.on('offer', async (msg) => {
+    console.log(msg);
+
+});*/

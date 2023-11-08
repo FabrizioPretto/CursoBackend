@@ -1,4 +1,32 @@
-<h3>Socket Cliente</h3>
+<h2>Lista de Productos</h2>
+    <ul id="productsList" class="row row-cols-1 row-cols-md-3 g-4" style="display: inline-flex; flex-wrap:wrap; margin-bottom: 30px;"  >
+       
+{{#if productsArray.length}}
+    {{#each productsArray}}
+       
+        <li>
+            <div class="col">
+            <div class="card" style="width: 12em;" style="height:12em; border-radius:2px" >
+            <img src="{{thumbnail}}" style="height: 50px; width: 50px; text-decoration: none;" class="card-img-top" alt="{{title}}">
+            <div class="card-body">
+            <h5 class="card-title">Producto: {{title}}</h5>
+            <p class="card-text">Descripción: {{description}}</p>
+            <p class="card-text">Código: {{code}}</p>
+            <p class="card-text">Precio: ${{price}}</p>
+            <p class="card-text">Stock: {{stock}}</p>
+            <p class="card-text">Categoría: {{category}}</p>
+            </div>
+            </div>
+            </div>
+        </li></br>
+    {{/each}}
+{{else}}
+    <p>No existen usuarios</p>
+{{/if}}
+   <!-- Aquí van las cards de los productos -->
+    </ul>
+
+<h3>Ingrese un nuevo producto</h3>
 <form id="form">
     <label>Title</label><br><input type="text" name="title" id="title"><br><br>
     <label>Description</label><br><input type="text" name="description" id="description"><br><br>

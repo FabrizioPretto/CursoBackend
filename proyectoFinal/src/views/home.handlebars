@@ -7,12 +7,13 @@
 </head>
 <body>
     <h2>Lista de Productos</h2>
-    <ul id="productsList"  class="row row-cols-1 row-cols-md-3 g-4" style="display: inline-flex; flex-wrap:wrap; margin-bottom: 30px;"  >
+    <ul id="productsList" class="row row-cols-1 row-cols-md-3 g-4" style="display: inline-flex; flex-wrap:wrap; margin-bottom: 30px;"  >
        
 {{#if productsArray.length}}
     {{#each productsArray}}
        
         <li>
+            <div class="col">
             <div class="card" style="width: 12em;" style="height:12em; border-radius:2px" >
             <img src="{{thumbnail}}" style="height: 50px; width: 50px; text-decoration: none;" class="card-img-top" alt="{{title}}">
             <div class="card-body">
@@ -22,6 +23,7 @@
             <p class="card-text">Precio: ${{price}}</p>
             <p class="card-text">Stock: {{stock}}</p>
             <p class="card-text">Categoría: {{category}}</p>
+            </div>
             </div>
             </div>
         </li></br>
