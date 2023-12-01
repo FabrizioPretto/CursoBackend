@@ -9,18 +9,17 @@ export const cartSchema = new Schema({
             product: {
                 type: Schema.Types.ObjectId,
                 ref: "products",
-                default: []
             },
             quantity: {
                 type: Number,
                 default: 1,
-            }
-        }
-    ]
+            },
+        },
+    ],
 });
 
 cartSchema.pre('find', function () {
-    this.populate('products');
+    this.populate('products.product');
 })
 
 export const CartModel = model('carts', cartSchema);

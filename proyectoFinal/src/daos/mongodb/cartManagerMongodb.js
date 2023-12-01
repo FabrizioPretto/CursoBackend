@@ -3,9 +3,21 @@ import { ProductsModel } from "../mongodb/models/productModel.js"
 
 export default class CartDaoMongoDB {
 
+    /*async aggregation(){
+        try {
+            await CartModel.aggregate([
+                {
+                    $match:{}
+                }
+            ])
+        } catch (error) {
+            console.log(error);
+        }
+    }*/
+
     async getCartById(id) {
         try {
-            const response = await CartModel.findById(id).populate('products');
+            const response = await CartModel.findById(id).lean();
             return response;
         } catch (error) {
             console.log(error);
@@ -14,7 +26,7 @@ export default class CartDaoMongoDB {
 
     async getAllCarts() {
         try {
-            const response = await CartModel.find({});
+            const response = await CartModel.find({}).lean();
             return response;
         } catch (error) {
             console.log(error);
