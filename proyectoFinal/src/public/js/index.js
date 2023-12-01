@@ -1,8 +1,5 @@
 const socketClient = io();
 
-
-
-
 const form = document.getElementById('form');
 const inputTitle = document.getElementById('title');
 const inputDescription = document.getElementById('description');
@@ -63,9 +60,6 @@ socketClient.on('arrayProducts', async (productsArray) => {
             </div>
             </div>
         </li></br>`)
-    /*
-
-    */
 })
 
 /*

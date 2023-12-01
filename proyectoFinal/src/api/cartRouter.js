@@ -1,11 +1,34 @@
 import { Router } from "express";
+import * as controller from '../controllers/cartControllers.js';
+
 const router = Router();
 
-import { CartManager } from "../manager/cartManager.js";
+router.post('/', controller.createCart);
+
+router.post('/:idCart/product/:idProd', controller.addProductToCart);
+
+router.get('/', controller.getAllCarts);
+
+router.get('/:id', controller.getCartById);
+
+router.delete('/:id', controller.deleteCart);
+
+router.put('/:id', controller.updateCart);
+
+export default router;
+
+
+
+
+/*
+import { Router } from "express";
+const router = Router();
+
+import { CartManager } from "../daos/fileSystem/cartManager.js";
 const cartManager = new CartManager("./src/files/carts.json");
 
-import { ProductManager } from "../manager/productManager.js";
-const productManager = new ProductManager("./src/files/products.json");
+import { ProductManagerMongoDB } from "../daos/mongodb/productMongodbManager.js";
+const productManagerMongoDB = new ProductManagerMongoDB("./src/files/products.json");
 
 router.get('/', async (req, res) => {
 
@@ -44,14 +67,13 @@ router.post('/:idCart/product/:idProd', async (req, res) => {
         || product === false
         || cart === undefined
         || cart === false) res.status(404).json({ message: "Product or Cart not found" });
-    else {*/
-    try {
-        const productToSave = await cartManager.saveProductToCart(Number(idCart), Number(idProd))
-        res.status(200).json(productToSave);
-    } catch (error) {
-        res.status(500).json(error.message);
-    }
+    else {
+try {
+    const productToSave = await cartManager.saveProductToCart(Number(idCart), Number(idProd))
+    res.status(200).json(productToSave);
+} catch (error) {
+    res.status(500).json(error.message);
+}
     //}
 })
-
-export default router;
+*/

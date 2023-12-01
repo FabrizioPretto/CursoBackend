@@ -1,4 +1,5 @@
 import express from "express";
+import "../src/daos/mongodb/connection.js";
 import productRouter from '../src/api/productRouter.js';
 import cartRouter from '../src/api/cartRouter.js';
 import viewRealTimeProductRouter from './api/viewRealTimeProductsRouter.js';
@@ -6,8 +7,8 @@ import viewHomeRouter from './api/viewHomeRouter.js';
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
-import { ProductManager } from "./manager/productManager.js";
-const productManager = new ProductManager('./src/files/products.json');
+import { ProductManagerMongoDB } from "./daos/mongodb/productMongodbManager.js";
+const productManager = new ProductManagerMongoDB();
 
 
 const app = express();
