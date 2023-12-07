@@ -1,3 +1,4 @@
+import { productCollection } from "../daos/mongodb/models/productModel.js";
 import { ProductManagerMongoDB } from "../daos/mongodb/productMongodbManager.js";
 const productDao = new ProductManagerMongoDB();
 /*
@@ -6,9 +7,25 @@ import { __dirname } from "../utils.js";
 const prodDao = new ProductManagerFS(
     __dirname + "/daos/fileSystem/productManager.js");*/
 
-export const getAllProducts = async () => {
+export const aggregationBySort = async (order) => {
     try {
-        return await productDao.getProducts();
+        return await productDao.aggregationBySort(order);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const aggregationByLimit = async (docLimit) => {
+    try {
+        return await productDao.aggregationByLimit(docLimit);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getAllProducts = async (page, limit) => {
+    try {
+        return await productDao.getProducts(page, limit);
     } catch (error) {
         console.log(error);
     }

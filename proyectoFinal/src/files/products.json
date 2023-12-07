@@ -117,6 +117,7 @@
         "code": "11",
         "price": "2500",
         "stock": "15",
-        "category": "bazar"
+        "category": "bazar",
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU"
     }
 ]

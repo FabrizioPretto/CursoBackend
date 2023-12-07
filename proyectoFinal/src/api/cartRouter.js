@@ -11,7 +11,9 @@ router.get('/', controller.getAllCarts);
 
 router.get('/:id', controller.getCartById);
 
-router.delete('/:id', controller.deleteCart);
+router.delete('/:cid/product/:pid', controller.deleteProdInCart);
+
+router.delete('/:id', controller.deleteProductsInCart);
 
 router.put('/:id', controller.updateCart);
 

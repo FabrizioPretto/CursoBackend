@@ -2,16 +2,63 @@ import { ProductsModel } from "./models/productModel.js";
 
 export class ProductManagerMongoDB {
 
-    async getProducts() {
+    async aggregationByLimit(docLimit) {
         try {
-            return await ProductsModel.find({});
+            if (docLimit === undefined || docLimit === 0 || docLimit === null) docLimit = 10//|| docLimit isNan
+
+            return await ProductsModel.aggregate([
+                {
+                    $limit: docLimit
+                }
+            ])
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async aggregationBySort(order) {
+        try {
+            if (order !== null) {
+                if (order === "asc") {
+                    return await ProductsModel.aggregate([
+                        {
+                            $sort: { price: 1 }
+                        }
+                    ])
+                }
+                else {
+                    return await ProductsModel.aggregate([
+                        {
+                            $sort: { price: -1 }
+                        }
+                    ])
+                }
+            }
+            else return await ProductsModel.find({});
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    //Ver
+    /*
+    return await ProductsModel.aggregate([
+                {
+                    $limit: 10
+                }
+            ])
+    */
+    async getProducts(page = 1, limit = 10) {
+        try {
+            if (isNaN(page) || isNaN(limit)) { page = 1; limit = 10 };
+            return await ProductsModel.paginate({}, { page, limit });
+            //return await ProductsModel.find({});
         } catch (error) {
             console.log(error);
         }
     }
 
     async existCode(n) {
-        const array = await this.getProducts()
+        const array = await this.getProducts();
         return array.some(product => product.code === n);
     }
 
@@ -27,7 +74,7 @@ export class ProductManagerMongoDB {
 
 
         try {
-            const products = await this.getProducts();
+            const products = await ProductsModel.find({});
             products.push(product);
             return await ProductsModel.create(product);
         } catch (error) {

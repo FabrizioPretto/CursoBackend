@@ -4,6 +4,10 @@ import * as controller from "../controllers/productControllers.js";
 
 const router = Router();
 
+router.get('/sort', controller.aggregationBySort);
+
+router.get('/:limit', controller.aggregationByLimit);
+
 router.get('/', controller.getAllProducts);
 
 router.post('/', controller.createProduct);

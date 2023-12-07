@@ -63,3 +63,21 @@ export const deleteCart = async (id) => {
         console.log(error);
     }
 }
+
+export const deleteProdInCart = async (cid, pid) => {
+    try {
+        const cartWithoutProd = await cartDao.deleteProdInCart(cid, pid);
+        return cartWithoutProd;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteProductsInCart = async (id) => {
+    try {
+        const cartToDelete = await cartDao.deleteProductsInCart(id);
+        return cartToDelete;
+    } catch (error) {
+        console.log(error);
+    }
+}

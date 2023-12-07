@@ -37,7 +37,7 @@ export const createCart = async (req, res, next) => {
         const newCart = await service.createCart();
         if (!newCart) throw new Error("Error Creating Cart!");
         else {
-            res.status(201).json({ msg: "Carrito creado con éxito ", newCart });
+            res.status(201).json({ msg: "Carrito creado con éxito " + newCart });
         }
     } catch (error) {
         next(error);
@@ -64,5 +64,31 @@ export const deleteCart = async (req, res, next) => {
         else res.json(cartDeleted);
     } catch (error) {
         next(error);
+    }
+}
+
+export const deleteProdInCart = async (req, res, next) => {
+    try {
+        const { cid, pid } = req.params;
+        const cartWithoutProd = await service.deleteProdInCart(cid, pid);
+        res.status(200).json({ msg: "Producto eliminado con éxito " + cartWithoutProd });
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const deleteProductsInCart = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const cartToDelete = await service.deleteProductsInCart(id);
+        if (cartToDelete === undefined) {
+            throw new Error("El carrito está vacío!");
+        }
+        else {
+            console.log("El contenido del Cart a vaciar: " + cartToDelete.products);
+            res.json(cartToDelete)//.msg("El carrito ya no cuenta con productos");
+        }
+
+    } catch (error) {
+        console.log(error);
     }
 }
