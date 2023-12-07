@@ -17,6 +17,9 @@ router.delete('/:id', controller.deleteProductsInCart);
 
 router.put('/:id', controller.updateCart);
 
+router.put('/:cid/product/:pid', controller.updateProdQuantity);
+
+
 export default router;
 
 

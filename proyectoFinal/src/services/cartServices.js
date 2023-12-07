@@ -42,14 +42,23 @@ export const createCart = async () => {
     }
 }
 
-export const updateCart = async (id, obj) => {
+export const updateCart = async (id, cart) => {
     try {
         let item = await cartDao.getCartById(id);
-        if (item === false) throw new Error("Cart not found!");
+        if (item === undefined) throw new Error("Cart not found!");
         else {
-            const cartUpdated = await cartDao.updateCart(id, obj);
+            const cartUpdated = await cartDao.updateCart(id, cart);
             return cartUpdated;
         }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateProdQuantity = async (cid, pid, quantity) => {
+    try {
+        const cartUpdated = await cartDao.updateProdQuantity(cid, pid, quantity);
+        return cartUpdated;
     } catch (error) {
         console.log(error);
     }

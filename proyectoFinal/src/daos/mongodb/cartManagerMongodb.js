@@ -31,10 +31,22 @@ export default class CartDaoMongoDB {
         }
     }
 
-    async updateCart(id, obj) {
+    async updateCart(id, cart) {
         try {
-            await CartModel.updateOne({ _id: id }, obj);
-            return obj;
+            const response = await CartModel.findByIdAndUpdate(id, cart, { new: true })
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async updateProdQuantity(cid, pid, quantity) {
+        try {
+            const cart = await CartModel.findById(cid);
+            let index = cart.products.findIndex((element) => element.product._id.toString() === pid.toString());
+            cart.products[index].quantity = quantity;
+            cart.save();
+            return cart;
         } catch (error) {
             console.log(error);
         }
@@ -48,14 +60,11 @@ export default class CartDaoMongoDB {
             console.log(error);
         }
     }
-
+    //MANEJO DE ERRORES
     async deleteProdInCart(cid, pid) {
         try {
             const cart = await CartModel.findById(cid);
-
-            let index = cart.products.findIndex((element) =>
-                element._id.toString() === pid.toString()
-            );
+            let index = cart.products.findIndex((element) => element.product._id.toString() === pid.toString());
             cart.products.splice(index, 1);
             cart.save();
             return cart;
@@ -75,18 +84,19 @@ export default class CartDaoMongoDB {
         }
     }
 
+
     async addProductToCart(prodId, cartId) {
         try {
 
             const cart = await CartModel.findOne({ _id: cartId });
 
-            if (cart.products.some((elemento) => elemento._id == prodId)) {
+            if (cart.products.some((element) => element.product._id == prodId)) {
                 const indexProd = cart.products.findIndex(
-                    (elemento) => elemento._id == prodId
+                    (element) => element.product._id == prodId
                 );
                 cart.products[indexProd].quantity += 1;
             } else {
-                cart.products.push(prodId);
+                cart.products.push({ product: prodId });
             }
             cart.save();
             return cart;

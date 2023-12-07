@@ -1,11 +1,10 @@
 import { Schema, model } from 'mongoose';
 
-//export const cartCollection = "carts";
-
 export const cartSchema = new Schema({
 
     products: [
         {
+            _id: false,
             product: {
                 type: Schema.Types.ObjectId,
                 ref: 'products',
@@ -24,22 +23,3 @@ cartSchema.pre('find', function () {
 
 export const CartModel = model('carts', cartSchema);
 
-
-
-/*
-products: [
-        {
-            //_id: false,
-            quantity: {
-                type: Number,
-                default: 1,
-            },
-            product: {
-                type: Schema.Types.ObjectId,
-                ref: 'products',
-            },
-
-        },
-    ],
-});
-*/

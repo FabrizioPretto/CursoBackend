@@ -47,10 +47,24 @@ export const createCart = async (req, res, next) => {
 export const updateCart = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { cart } = req.params;
-        const cartUpdated = await service.updateCart(id, cart);
+        const cartUpdated = await service.updateCart(id, req.body);
         if (cartUpdated === false) throw new Error("Validation Error!");
         else res.json(cartUpdated);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const updateProdQuantity = async (req, res, next) => {
+    try {
+        const { cid, pid } = req.params
+        const { quantity } = req.body
+        const cartUpdated = await service.updateProdQuantity(cid, pid, quantity)
+
+        if (quantity === undefined || quantity === null)
+            throw new Error("Quantity Error!");
+        else
+            res.status(200).json({ msg: "Cantidad del Producto actualizada con éxito " + cartUpdated });
     } catch (error) {
         next(error);
     }
@@ -61,7 +75,7 @@ export const deleteCart = async (req, res, next) => {
         const { id } = req.params;
         const cartDeleted = await service.deleteCart(id);
         if (cartDeleted === false) throw new Error("Validation Error!");
-        else res.json(cartDeleted);
+        else res.status(200).json({ msg: "Carrito vaciado con éxito" + cartDeleted });
     } catch (error) {
         next(error);
     }
