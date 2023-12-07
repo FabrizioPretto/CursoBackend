@@ -11,8 +11,8 @@ import { ProductManagerMongoDB } from "./daos/mongodb/productMongodbManager.js";
 const productManager = new ProductManagerMongoDB();
 import cookieParser from 'cookie-parser';
 
-const secretKey = '1234';
-app.use(cookieParser(secretKey));
+/*const secretKey = '1234';
+app.use(cookieParser(secretKey));*/
 
 
 const app = express();
