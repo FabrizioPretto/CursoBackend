@@ -9,6 +9,10 @@ import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
 import { ProductManagerMongoDB } from "./daos/mongodb/productMongodbManager.js";
 const productManager = new ProductManagerMongoDB();
+import cookieParser from 'cookie-parser';
+
+const secretKey = '1234';
+app.use(cookieParser(secretKey));
 
 
 const app = express();
