@@ -14,8 +14,8 @@ export default class UserController {
 
     async login(req, res, next) {
         try {
-            //const { email, password } = req.body;
-            const user = await userService.login(req.body);
+            const { email, password } = req.body;
+            const user = await userService.login(email, password);
             if (user) {
                 req.session.email = email;
                 req.session.password = password;
