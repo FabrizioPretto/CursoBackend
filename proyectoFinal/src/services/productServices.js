@@ -31,6 +31,14 @@ export const getAllProducts = async (page, limit) => {
     }
 }
 
+export const getAll = async () => {
+    try {
+        return await productDao.getAllProducts();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getProductById = async (id) => {
     try {
         const prod = await productDao.getProductById(id);

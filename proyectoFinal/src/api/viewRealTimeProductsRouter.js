@@ -1,11 +1,12 @@
 import { __dirname } from "../utils.js";
-import { ProductManagerFS } from "../daos/fileSystem/productManager.js";
-const productManagerFS = new ProductManagerFS('./src/files/products.json');
+
+import { ProductManagerMongoDB } from "../daos/mongodb/productMongodbManager.js";
+const productsDao = new ProductManagerMongoDB();
 import { Router } from "express";
 const router = Router();
 
 router.get('/', async (req, res) => {
-    let productsArray = await productManagerFS.getProducts();
+    let productsArray = await productsDao.getAllProducts();
     res.render('realTimeProducts', { productsArray });
 });
 

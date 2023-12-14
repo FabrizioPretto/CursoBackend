@@ -57,6 +57,15 @@ export class ProductManagerMongoDB {
         }
     }
 
+    async getAllProducts() {
+        try {
+            const products = await ProductsModel.find({}).lean();
+            return products;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async existCode(n) {
         const array = await this.getProducts();
         return array.some(product => product.code === n);

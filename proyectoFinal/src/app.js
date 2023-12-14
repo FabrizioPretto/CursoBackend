@@ -13,6 +13,8 @@ const productManager = new ProductManagerMongoDB();
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import './passport/strategies.js';
+import passport from "passport";
 //import MONGO_ATLAS_URL from '../src/daos/mongodb/connection.js';
 
 
@@ -43,6 +45,11 @@ app.use(cookieParser());
 app.use(session(mongoStoreOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
+
+//antes de las rutas
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");

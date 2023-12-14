@@ -9,6 +9,15 @@ const inputStock = document.getElementById('stock');
 const inputCategory = document.getElementById('category');
 
 const products = document.getElementById('products');
+const inputLogout = document.getElementById('logout')
+
+inputLogout.onclick = () => {
+    render('login');
+}
+
+async function logout() {
+    res.render('login');
+}
 
 
 form.onsubmit = (e) => {

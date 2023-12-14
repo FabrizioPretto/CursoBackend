@@ -5,7 +5,6 @@ export default class CartDaoMongoDB {
 
     async getCartById(id) {
         try {
-
             const response = await CartModel.findById(id).populate('products.product');
             return response;
         } catch (error) {
