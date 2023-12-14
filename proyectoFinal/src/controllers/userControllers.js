@@ -17,27 +17,20 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
     try {
-
         const { email, password } = req.body;
-
         const user = await service.login(email, password);
-        console.log(user);
         if (user) {
             req.session.email = email;
             req.session.first_name = user.first_name;
             req.session.last_name = user.last_name;
             req.session.role = user.role;
             const info = req.session;
-            //const role = req.sesssion.role
-            console.log("pepito");
             let flag = false;
-            console.log(flag);
-            if (user.role === "admin") { flag = true; console.log(flag); }
-
+            if (user.role === "admin") { flag = true; }
             let products = await productsDao.getAllProducts();
             res.render('realTimeProducts', { flag, info, products });
         }
-        else res.redirect('/views/error-login');//crear plantilla de error
+        else res.redirect('/views/error-login');
     } catch (error) {
         console.log(error);
     }
