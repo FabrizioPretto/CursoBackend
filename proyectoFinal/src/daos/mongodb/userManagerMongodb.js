@@ -5,7 +5,7 @@ export class UserManagerMondoDB {
 
     async getUserByEmail(email) {
         try {
-            const response = await UserModel.findOne({ email: email });
+            const response = await UserModel.findOne({ email: email }).lean();
             if (response) {
                 return response;
             } else return false;

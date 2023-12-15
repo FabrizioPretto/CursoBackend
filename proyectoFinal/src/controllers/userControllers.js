@@ -74,7 +74,29 @@ export const registerResponse = (req, res, next) => {
 export const loginResponse = async (req, res, next) => {
     try {
         const info = await service.getUserById(req.session.passport.user);
-        //const  = user;
+        let products = await productsDao.getAllProducts();
+        res.render('realTimeProducts', { info, products });
+
+    } catch (error) {
+        next(error.message)
+    }
+}
+
+export const githubResponse = async (req, res, next) => {
+    try {
+        console.log(req.user);
+        const { first_name, email, isGithub } = req.user;
+        const info = await userDao.getUserByEmail(email);
+        console.log(info);
+        /* res.json({
+             msg: "Register/Login Github ok",
+             session: req.session,
+             user: {
+                 first_name,
+                 email,
+                 isGithub
+             }
+         })*/
         let products = await productsDao.getAllProducts();
         res.render('realTimeProducts', { info, products });
 

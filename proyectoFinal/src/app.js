@@ -15,6 +15,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import './passport/strategies.js';
 import passport from "passport";
+import './passport/githubStrategy.js';
 //import MONGO_ATLAS_URL from '../src/daos/mongodb/connection.js';
 
 
