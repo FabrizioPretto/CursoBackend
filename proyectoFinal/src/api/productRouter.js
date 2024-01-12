@@ -1,21 +1,22 @@
 import { Router } from "express";
-import ProductController from "../controllers/userControllers.js" //hacer el product controller";
+import ProductController from '../controllers/productControllers.js'
+const prodController = new ProductController()
 //import * as controller from "../controllers/productControllers.js";
 
 const router = Router();
 
-/*router.get('/sort', controller.aggregationBySort);
+router.get('/sort', prodController.aggregationBySort);
 
-router.get('/:limit', controller.aggregationByLimit);
+router.get('/:limit', prodController.aggregationByLimit);
 
-router.get('/', controller.getAllProducts);
+router.get('/', prodController.getAllProducts);
 
-router.post('/', controller.createProduct);
+router.post('/', prodController.createProduct);
 
-router.get("/:id", controller.getProductById);
+router.get("/:id", prodController.getProductById);
 
-router.delete('/:id', controller.deleteProduct);
+router.delete('/:id', prodController.deleteProduct);
 
-router.put('/:id', controller.updateProduct);*/
+router.put('/:id', prodController.updateProduct);
 
 export default router;
