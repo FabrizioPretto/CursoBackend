@@ -1,6 +1,6 @@
 import fs from "fs";
 
-export class ProductManagerFS {
+export default class ProductManagerFS {
     constructor(path) {
         this.path = path;
     }

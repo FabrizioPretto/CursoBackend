@@ -1,14 +1,156 @@
-import * as service from "../services/userServices.js";
+import Controllers from "./classControllers.js";
+import UserServices from "../services/userServices.js";
+import { createResponse } from "../utils.js";
+const userServices = new UserServices();
+import ProductService from "../services/productServices.js";
+const productServices = new ProductService();
+
+export default class UserController extends Controllers {
+    constructor() {
+        super(userServices);
+    }
+
+    register = async (req, res, next) => {
+        try {
+            const newUser = await userServices.register(req.body);
+            if (!newUser) createResponse(res, 404, 'User already exists');
+            else createResponse(res, 200, newUser);
+        } catch (error) {
+            next(error.message);
+        }
+    }
+
+    login = async (req, res, next) => {
+        try {
+            const token = await userServices.login(req.body)
+            if (!token) createResponse(res, 404, 'Error login/generate token');
+            else {
+                res.header('Authorization', token);
+                createResponse(res, 200, token);
+            }
+        } catch (error) {
+            next(error.message);
+        }
+    }
+
+    /*profile = async (req, res, next) => {
+        try {
+            const { first_name, last_name, email, role } = req.user;
+            createResponse(res, 200, { first_name, last_name, email, role });
+        } catch (error) {
+            next(error.message);
+        }
+    }*/
+
+
+    profile = async (req, res, next) => {
+        try {
+            const info = await userServices.getById(req.session.passport.user);
+            res.render('profile', { info })
+        } catch (error) {
+            next(error.message);
+        }
+    };
+
+
+
+
+
+    registerResponse = async (req, res, next) => {
+        try {
+            res.json({
+                msg: 'register Ok',
+                session: req.session
+            })
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+    loginResponse = async (req, res, next) => {
+        try {
+            const info = await userServices.getById(req.session.passport.user);
+            let products = await productServices.getAll();
+            res.render('realTimeProducts', { info, products });
+
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+    logout = async (req, res, next) => {
+        try {
+            req.session.destroy((err) => {
+                if (!err) {
+                    res.redirect('/');
+                } else {
+                    res.send({ status: "Logout Error" });
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    githubResponse = async (req, res, next) => {
+        try {
+            console.log(req.user);
+            const { first_name, email, isGithub } = req.user;
+            const info = await userServices.getUserByEmail(email);
+            console.log(info);
+            //res.json({msg: "Register/Login Github ok",session: req.session,user: {first_name,email,isGithub}})
+            let products = await productServices.getAll();
+            res.render('realTimeProducts', { info, products });
+
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+
+    googleResponse = async (req, res, next) => {
+        try {
+            console.log(req.user);
+            const { first_name, last_name, email, isGoogle } = req.user;
+            const info = await userServices.getUserByEmail(email);
+            console.log(info);
+            //res.json({msg: "Register/Login Google ok",session: req.session,user: { first_name, last_name, email, isGoogle }})
+            let products = await productServices.getAll();
+            res.render('realTimeProducts', { info, products });
+
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+    loginFront = async (req, res, next) => {
+        try {
+            const { email, password } = req.body;
+            const user = await userDao.login({ email, password });
+            if (!user) res.json({ msg: 'Invalid Credentials' });
+            const accessToken = generateToken(user);
+            res.json(accessToken);
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+}
+
+
+/*import * as service from "../services/userServices.js";
 import { ProductManagerMongoDB } from "../daos/mongodb/productMongodbManager.js";
 const productsDao = new ProductManagerMongoDB();
 import { UserManagerMondoDB } from "../daos/mongodb/userManagerMongodb.js";
+import { generateToken } from "../jwt/auth.js";
 const userDao = new UserManagerMondoDB();
 
 export const register = async (req, res, next) => {
     try {
         const user = await service.register(req.body);
-        if (user) { res.redirect('/views'); }
-        else res.redirect('/views/register-error');
+        if (user) { res.redirect('/register'); }
+        else res.redirect('/register-error');
     } catch (error) {
         next(error);
     }
@@ -28,9 +170,11 @@ export const login = async (req, res, next) => {
             let flag = false;
             if (user.role === "admin") { flag = true; }
             let products = await productsDao.getAllProducts();
+            const accessToken = generateToken(user);
+            res.header('Authorization', accessToken).json({ msg: 'Login Ok', accessToken })
             res.render('realTimeProducts', { flag, info, products });
         }
-        else res.redirect('/views/error-login');
+        else res.redirect('/error-login');
     } catch (error) {
         console.log(error);
     }
@@ -49,7 +193,7 @@ export const logout = async (req, res, next) => {
     try {
         req.session.destroy((err) => {
             if (!err) {
-                res.redirect('/views');
+                res.redirect('/');
             } else {
                 res.send({ status: "Logout Error" });
             }
@@ -88,15 +232,23 @@ export const githubResponse = async (req, res, next) => {
         const { first_name, email, isGithub } = req.user;
         const info = await userDao.getUserByEmail(email);
         console.log(info);
-        /* res.json({
-             msg: "Register/Login Github ok",
-             session: req.session,
-             user: {
-                 first_name,
-                 email,
-                 isGithub
-             }
-         })*/
+        //res.json({msg: "Register/Login Github ok",session: req.session,user: {first_name,email,isGithub}})
+let products = await productsDao.getAllProducts();
+res.render('realTimeProducts', { info, products });
+
+    } catch (error) {
+    next(error.message)
+}
+}
+
+
+export const googleResponse = async (req, res, next) => {
+    try {
+        console.log(req.user);
+        const { first_name, last_name, email, isGoogle } = req.user;
+        const info = await userDao.getUserByEmail(email);
+        console.log(info);
+        //res.json({msg: "Register/Login Google ok",session: req.session,user: { first_name, last_name, email, isGoogle }})
         let products = await productsDao.getAllProducts();
         res.render('realTimeProducts', { info, products });
 
@@ -104,3 +256,17 @@ export const githubResponse = async (req, res, next) => {
         next(error.message)
     }
 }
+
+export const loginFront = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        const user = await userDao.login({ email, password });
+        if (!user) res.json({ msg: 'Invalid Credentials' });
+        const accessToken = generateToken(user);
+        res.json(accessToken);
+
+    } catch (error) {
+        next(error);
+    }
+}
+*/

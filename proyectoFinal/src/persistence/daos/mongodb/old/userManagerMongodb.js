@@ -1,5 +1,5 @@
-import { createHash, isValidPass } from "../../utils.js";
-import { UserModel } from "./models/userModel.js";
+import { createHash, isValidPass } from '../../../../utils.js';
+import { UserModel } from "../users/userModel.js";
 
 export class UserManagerMondoDB {
 

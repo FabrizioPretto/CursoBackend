@@ -1,5 +1,7 @@
-import { UserManagerMondoDB } from "../daos/mongodb/userManagerMongodb.js";
-const userDao = new UserManagerMondoDB();
+import UserMongoDao from '../persistence/daos/mongodb/users/userDao.js'
+
+//import { UserManagerMondoDB } from "../persistence/daos/mongodb/userManagerMongodb.js";
+const userDao = new UserMongoDao();
 
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';

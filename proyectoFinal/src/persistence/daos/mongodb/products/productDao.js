@@ -1,6 +1,12 @@
-import { ProductsModel } from "./models/productModel.js";
+import MongoDao from "../mongoDao.js";
+import { ProductsModel } from "./productModel.js";
 
-export class ProductManagerMongoDB {
+
+export default class ProductMongoDao extends MongoDao {
+
+    constructor() {
+        super(ProductsModel);
+    }
 
     async aggregationByLimit(docLimit) {
         try {
@@ -39,28 +45,12 @@ export class ProductManagerMongoDB {
             console.log(error);
         }
     }
-    //Ver
-    /*
-    return await ProductsModel.aggregate([
-                {
-                    $limit: 10
-                }
-            ])
-    */
+
     async getProducts(page = 1, limit = 10) {
         try {
             if (isNaN(page) || isNaN(limit)) { page = 1; limit = 10 };
             return await ProductsModel.paginate({}, { page, limit });
             //return await ProductsModel.find({});
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async getAllProducts() {
-        try {
-            const products = await ProductsModel.find({}).lean();
-            return products;
         } catch (error) {
             console.log(error);
         }
@@ -111,20 +101,10 @@ export class ProductManagerMongoDB {
         }
     }
 
-    async updateProduct(newProduct, id) {
-
+    async getAllProducts() {
         try {
-            return await ProductsModel.findByIdAndUpdate({ _id: id }, newProduct, { new: true });
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
-
-    async deleteProduct(idNumber) {
-
-        try {
-            return await ProductsModel.findByIdAndDelete(idNumber)
+            const products = await ProductsModel.find({}).lean();
+            return products;
         } catch (error) {
             console.log(error);
         }

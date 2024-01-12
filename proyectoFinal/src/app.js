@@ -1,24 +1,28 @@
 import express from "express";
-import "../src/daos/mongodb/connection.js";
-import productRouter from '../src/api/productRouter.js';
+import "./config/connection.js";
+/*import productRouter from '../src/api/productRouter.js';
 import cartRouter from '../src/api/cartRouter.js';
 import viewRealTimeProductRouter from './api/viewRealTimeProductsRouter.js';
 import viewsRouter from './api/viewsRouter.js';
-import userRouter from './api/userRouter.js';
+import userRouter from './api/userRouter.js';*/
+import MainRouter from "./api/index.js";
+const mainRouter = new MainRouter();
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
-import { ProductManagerMongoDB } from "./daos/mongodb/productMongodbManager.js";
-const productManager = new ProductManagerMongoDB();
+//import { ProductManagerMongoDB } from "./daos/mongodb/productMongodbManager.js";
+//const productManager = new ProductManagerMongoDB();
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import './passport/strategies.js';
 import passport from "passport";
 import './passport/githubStrategy.js';
-//import MONGO_ATLAS_URL from '../src/daos/mongodb/connection.js';
+import './passport/googleStrategy.js';
 
+import 'dotenv/config';
 
+//initMongoDB();
 /*const secretKey = '1234';
 app.use(cookieParser(secretKey));*/
 
@@ -41,6 +45,7 @@ const mongoStoreOptions = {
 
 
 
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(session(mongoStoreOptions));
@@ -56,13 +61,19 @@ app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
 
-app.use('/api/products', productRouter);
+app.use('/', mainRouter.getRouter());
+
+/*app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use('/realtimeproducts', viewRealTimeProductRouter);
-app.use('/views', viewsRouter);
-app.use('/users', userRouter);
+app.use('/', viewsRouter);
+app.use('/users', userRouter);*/
 
-const PORT = 8080;
+//const persistence = process.env.PERSISTENCE;
+
+
+
+const PORT = process.env.PORT || 8080;
 
 const httpServer = app.listen(PORT, () =>
     console.log(`Server ok on port ${PORT}`));
@@ -85,3 +96,5 @@ socketServer.on('connection', (socket) => {
     //socket.emit('offer',)
 
 });
+
+

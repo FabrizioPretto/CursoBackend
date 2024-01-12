@@ -22,3 +22,7 @@ export const isValidPass = (password, user) => {
         console.log(error);
     }
 }
+
+export const createResponse = (res, statusCode, data) => {
+    return res.status(statusCode).json({ data });
+}

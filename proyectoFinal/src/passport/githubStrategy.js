@@ -1,7 +1,8 @@
 import { Strategy as GithubStrategy } from 'passport-github2';
 import passport from 'passport';
-import { UserManagerMondoDB } from '../daos/mongodb/userManagerMongodb.js';
-const userDao = new UserManagerMondoDB();
+import UserMongoDao from '../persistence/daos/mongodb/users/userDao.js'
+//import { UserManagerMondoDB } from '../persistence/daos/mongodb/userManagerMongodb.js';
+const userDao = new UserMongoDao();
 
 const strategyOptions = {
     clientID: 'Iv1.3b0d38b52c66e68f',
