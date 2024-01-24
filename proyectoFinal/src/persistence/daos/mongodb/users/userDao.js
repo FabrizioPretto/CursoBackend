@@ -32,7 +32,7 @@ export default class UserMongoDao extends MongoDao {
     async register(user) {
         try {
             const { email, password } = user;
-            const existsUser = this.getUserByEmail(email).lean();
+            const existsUser = await this.getUserByEmail(email);//.lean();
             if (!existsUser) {
                 if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
                     return this.model.create({ ...user, password: createHash(password), role: "admin" });
@@ -48,7 +48,8 @@ export default class UserMongoDao extends MongoDao {
     async login(user) {
         try {
             const { email, password } = user;
-            const userExist = this.getUserByEmail(email).lean();
+            const userExist = await this.getUserByEmail(email);//.lean();
+            console.log(userExist);
             if (userExist) {
                 const isValid = isValidPass(password, userExist)
                 if (!isValid) return false;

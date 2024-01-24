@@ -3,21 +3,21 @@ import * as controller from '../controllers/cartControllers.js';
 
 const router = Router();
 
-router.post('/', controller.createCart);
+router.post('/', controller.create);
 
-router.post('/:idCart/product/:idProd', controller.addProductToCart);
+router.post('/:idCart/product/:idProd', controller.addProdToCart);
 
-router.get('/', controller.getAllCarts);
+router.get('/', controller.getAll);
 
-router.get('/:id', controller.getCartById);
+router.get('/:id', controller.getById);
 
-router.delete('/:cid/product/:pid', controller.deleteProdInCart);
+router.delete('/:cid/product/:pid', controller.removeProdToCart);
 
-router.delete('/:id', controller.deleteProductsInCart);
+router.delete('/:id', controller.remove);
 
-router.put('/:id', controller.updateCart);
+router.put('/:id', controller.update);
 
-router.put('/:cid/product/:pid', controller.updateProdQuantity);
+router.put('/:cid/product/:pid', controller.updateProdQuantityToCart);
 
 
 export default router;

@@ -58,6 +58,18 @@ export default class ProductController extends Controllers {
         }
     }
 
+    //NUEVO
+    getProdById = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const prod = await productService.getProdById(id)//this.service.getProdById(id)
+            if (!prod) return createResponse(res, 404, { msg: 'create', error: 'getById failed' })
+            else return createResponse(res, 200, prod);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     getProductById = async (req, res, next) => {
         try {
             const { id } = req.params;

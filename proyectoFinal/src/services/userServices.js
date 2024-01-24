@@ -1,7 +1,9 @@
 import Services from "./classServices.js";
-import persistence from "../persistence/daos/persistence.js";
-const { userDao } = persistence;
+import factory from "../persistence/daos/factory.js";
+const { userDao } = factory;
 import { generateToken } from '../jwt/auth.js';
+import UserRepository from '../repository/userReporistory.js';
+const userRepository = new UserRepository();
 
 export default class UserServices extends Services {
     constructor() {
@@ -10,6 +12,16 @@ export default class UserServices extends Services {
 
     getUserByEmail = async (email) => {
         return await userDao.getUserByEmail(email);
+    }
+
+    getUserById = async (id) => {
+        try {
+            const user = await userDao.getUserById(id);
+            if (!user) return false;
+            else return user;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     #generateTokenService = async (user) => {
@@ -38,6 +50,17 @@ export default class UserServices extends Services {
             console.log(error);
         }
     }
+
+    async getUserDTO(id) {
+        try {
+            const user = await userRepository.getUserDTO(id);
+            if (!user) return false;
+            else return user;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 }
 
 

@@ -19,4 +19,6 @@ router.delete('/:id', prodController.deleteProduct);
 
 router.put('/:id', prodController.updateProduct);
 
+router.get('/dto/:id', prodController.getProdById);
+
 export default router;

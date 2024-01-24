@@ -22,5 +22,6 @@ const registerOrLogin = async (accessToken, refreshToken, profile, done) => {
     })
     return done(null, newUser);
 }
-
+//Dejame sugerirte para la github strategy, que debes añadir un nuevo campo para poder obtener el email correctamente. 
+//Este campo es "scope":["user: email"]. Esto te permitirá acceder al email de github desde el campo profile.emails[0].value. 
 passport.use('github', new GithubStrategy(strategyOptions, registerOrLogin));

@@ -8,11 +8,13 @@
 </head>
 <body>
     <h1>PERFIL</h1>
-    <p>Nombre: {{info.first_name}}</p>
-    <p>Apellido: {{info.last_name}}</p>
-    <p>Email: {{info.email}}</p>
-    <p>Rol de Usuario: {{info.role}}</p>
-    {{!-- <button onclick="location.href='/realTimeProducts'">Regresar</button> --}}
+    <p>Nombre: {{info.userFirstname}}</p>
+    <p>Apellido: {{info.userLastname}}</p>
+    <p>Email: {{info.userEmail}}</p>
+    <p>Edad: {{info.userAge}}</p>
+    <p>Rol de Usuario: {{info.userRole}}</p>
+    <button onclick="location.href='/users/login'">Regresar</button>
 </body>
 {{!-- <script src="../public/js/profile.js"></script> --}}
 </html>
+

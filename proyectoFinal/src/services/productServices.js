@@ -1,6 +1,8 @@
 import Services from "./classServices.js";
-import persistence from "../persistence/daos/persistence.js";
-const { prodDao } = persistence;
+import factory from "../persistence/daos/factory.js";
+const { prodDao } = factory;
+import ProductRepository from "../repository/productRepository.js";
+const prodRepository = new ProductRepository();
 
 export default class ProductService extends Services {
 
@@ -36,6 +38,17 @@ export default class ProductService extends Services {
     getAll = async () => {
         try {
             return await prodDao.getAllProducts();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //NUEVO
+    getProdById = async (id) => {
+        try {
+            const prod = await prodRepository.getProdById(id);
+            if (!prod) return false;
+            else return prod;
         } catch (error) {
             console.log(error);
         }

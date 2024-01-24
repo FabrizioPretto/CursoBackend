@@ -5,6 +5,7 @@ const userServices = new UserServices();
 import ProductService from "../services/productServices.js";
 const productServices = new ProductService();
 
+
 export default class UserController extends Controllers {
     constructor() {
         super(userServices);
@@ -45,7 +46,7 @@ export default class UserController extends Controllers {
 
     profile = async (req, res, next) => {
         try {
-            const info = await userServices.getById(req.session.passport.user);
+            const info = await userServices.getUserDTO(req.session.passport.user) //userServices.getById(req.session.passport.user);
             res.render('profile', { info })
         } catch (error) {
             next(error.message);

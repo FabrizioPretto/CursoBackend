@@ -5,7 +5,7 @@ import cartRouter from '../src/api/cartRouter.js';
 import viewRealTimeProductRouter from './api/viewRealTimeProductsRouter.js';
 import viewsRouter from './api/viewsRouter.js';
 import userRouter from './api/userRouter.js';*/
-import MainRouter from "./api/index.js";
+import MainRouter from "./routes/index.js";
 const mainRouter = new MainRouter();
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
@@ -19,9 +19,8 @@ import './passport/strategies.js';
 import passport from "passport";
 import './passport/githubStrategy.js';
 import './passport/googleStrategy.js';
-
 import 'dotenv/config';
-
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;//Agregué esta línea porque recibíaun error "error self signed certificate in certificate chain"
 //initMongoDB();
 /*const secretKey = '1234';
 app.use(cookieParser(secretKey));*/

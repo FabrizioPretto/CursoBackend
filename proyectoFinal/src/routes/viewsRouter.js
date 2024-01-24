@@ -11,6 +11,7 @@ import { isAuth } from "../middlewares/isAuth.js";
 import UserController from "../controllers/userControllers.js";
 const controller = new UserController();
 
+
 router.get('/', async (req, res) => {
     res.render('login')
 })
