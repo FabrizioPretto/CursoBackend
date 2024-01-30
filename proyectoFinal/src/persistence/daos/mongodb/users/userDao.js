@@ -9,18 +9,22 @@ export default class UserMongoDao extends MongoDao {
 
     async getUserByEmail(email) {
         try {
-            const response = await this.model.findOne({ email: email }).lean();
-            if (response) {
-                return response;
+            const user = await this.model.findOne({ email })//.lean();
+            if (user) {
+                return user;
             } else return false;
         } catch (error) {
             console.log(error);
         }
     }
 
+
+
     async getUserById(id) {
         try {
-            const response = await this.model.findById(id).lean();
+            console.log("Id ", id);
+            const response = await this.model.findById(id)//.lean();
+            console.log("Response ", response);
             if (response) return response;
             else return false;
         } catch (error) {
@@ -49,7 +53,6 @@ export default class UserMongoDao extends MongoDao {
         try {
             const { email, password } = user;
             const userExist = await this.getUserByEmail(email);//.lean();
-            console.log(userExist);
             if (userExist) {
                 const isValid = isValidPass(password, userExist)
                 if (!isValid) return false;

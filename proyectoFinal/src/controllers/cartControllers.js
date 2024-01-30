@@ -1,4 +1,92 @@
-import * as service from '../services/cartServices.js'
+import Controllers from './classControllers.js';
+import CartServices from '../services/cartServices.js';
+import { createResponse } from '../utils.js';
+const services = new CartServices();
+
+export default class CartControllers extends Controllers {
+    constructor() {
+        super(services);
+    }
+
+
+    remove = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const cartToDel = await services.remove(id.toString());
+            if (!cartToDel) createResponse(res, 404, "Error delete cart")
+            else createResponse(res, 200, `Cart id: ${id} deleted`)
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+    addProdToCart = async (req, res, next) => {
+        try {
+            const { idCart, idProd } = req.params;
+            const newProdToUserCart = await services.addProdToCart(idCart, idProd);
+            if (!newProdToUserCart) createResponse(res, 404, "Error adding product to cart");
+            else createResponse(res, 200, newProdToUserCart);
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+    removeProdFromCart = async (req, res, next) => {
+        try {
+            const { cid, pid } = req.params;
+            const delProdFromUserCart = await services.removeProdFromCart(cid, pid);
+            if (!delProdFromUserCart) createResponse(res, 404, "Error removing product from cart");
+            else createResponse(res, 200, delProdFromUserCart);
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+    updateProdQuantityToCart = async (req, res, next) => {
+        try {
+            const { cid, pid } = req.params;
+            const { quantity } = req.body;
+            const updateProdQuantity = await services.updateProdQuantityToCart(cid, pid, quantity);
+            if (!updateProdQuantity) createResponse(res, 404, "Error updating product quantity in cart");
+            else createResponse(res, 200, updateProdQuantity);
+
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+    clearCart = async (req, res, next) => {
+        try {
+            const { idCart } = req.params;
+            const clearCart = await services.clearCart(idCart);
+            if (!clearCart) createResponse(res, 404, "Error emptying cart");
+            else createResponse(res, 200, clearCart);
+        } catch (error) {
+            next(error.message)
+        }
+    }
+
+    getByIdWithPopulate = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const response = await services.getById(id);
+            await response.populate('products.product');
+            if (!response) createResponse(res, 404, { method: 'getById', error: 'Cart not found' })
+            else createResponse(res, 200, response);
+        } catch (error) {
+            next(error.message);
+        }
+    }
+
+
+}
+
+
+
+
+
+
+/*import * as service from '../services/cartServices.js'
 
 export const getAll = async (req, res, next) => {
     try {
@@ -56,10 +144,7 @@ export const addProdToCart = async (req, res, next) => {
     try {
         const { idCart } = req.params;
         const { idProd } = req.params;
-        const newProdToUserCart = await service.addProdToCart(
-            idCart,
-            idProd,
-        );
+        const newProdToUserCart = await service.addProduct(idCart, idProd);
         if (!newProdToUserCart) res.json({ msg: "Error add product to cart" });
         else res.json(newProdToUserCart);
     } catch (error) {
@@ -111,7 +196,7 @@ export const clearCart = async (req, res, next) => {
         next(error.message);
     }
 };
-
+*
 
 
 

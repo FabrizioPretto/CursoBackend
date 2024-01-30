@@ -1,9 +1,10 @@
 import Controllers from "./classControllers.js";
 import UserServices from "../services/userServices.js";
-import { createResponse } from "../utils.js";
 const userServices = new UserServices();
 import ProductService from "../services/productServices.js";
 const productServices = new ProductService();
+import { createResponse } from "../utils.js";
+import { generateToken } from "../jwt/auth.js";
 
 
 export default class UserController extends Controllers {
@@ -23,16 +24,20 @@ export default class UserController extends Controllers {
 
     login = async (req, res, next) => {
         try {
-            const token = await userServices.login(req.body)
+            //const { email, password } = req.body;
+            const token = await userServices.login(req.body);
+            console.log("user controller:::", token);
             if (!token) createResponse(res, 404, 'Error login/generate token');
             else {
-                res.header('Authorization', token);
-                createResponse(res, 200, token);
+                //const access_token = generateToken(user);
+                res.header('Authorization', token).json({ msg: "Login Ok", token });
+                //createResponse(res, 200, token);
             }
         } catch (error) {
             next(error.message);
         }
     }
+
 
     /*profile = async (req, res, next) => {
         try {

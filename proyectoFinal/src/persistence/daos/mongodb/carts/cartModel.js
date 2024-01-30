@@ -22,4 +22,3 @@ cartSchema.pre('find', function () {
 });
 
 export const CartModel = model('carts', cartSchema);
-

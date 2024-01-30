@@ -1,16 +1,19 @@
 import { Router } from "express";
 import { checkToken } from '../middlewares/checkToken.js';
 import UserController from '../controllers/userControllers.js';
-const controller = new UserController();
+const controllers = new UserController();
 import passport from "passport";
 import { isAuth } from "../middlewares/isAuth.js";
 
 const router = Router();
 
-router.post('/register', passport.authenticate('signup'), controller.registerResponse);
+/*router.post('/register', passport.authenticate('signup'), controller.registerResponse);
 router.post('/login', passport.authenticate('login'), controller.loginResponse);
-router.get('/profile', checkToken, controller.profile);
+router.get('/profile', checkToken, controller.profile);*/
 
+router.post('/register', controllers.register);
+router.post('/login', controllers.login);
+router.get('/profile', checkToken, controllers.profile);
 
 router.get('/private', checkToken, (req, res) => {
     const { first_name, last_name, email, role } = req.user;
@@ -33,14 +36,14 @@ router.get(
 router.get(
     '/github',
     passport.authenticate('github', { scope: ["user:email"] }),
-    controller.githubResponse);
+    controllers.githubResponse);
 
 router.get(
     '/oauth2/redirect/accounts.google.com',
     passport.authenticate('google', { assignProperty: "user" }),
-    controller.googleResponse);
+    controllers.googleResponse);
 
-router.post('/loginfront', controller.loginFront)
+router.post('/loginfront', controllers.loginFront)
 
 export default router;
 /*

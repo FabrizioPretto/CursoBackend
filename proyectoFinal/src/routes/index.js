@@ -26,7 +26,7 @@ export default class MainRouter {
         this.router.use('/', emailRouter);
         this.router.use('/', smsRouter);
         this.router.use('/', wsRouter);
-        this.router.use('/', ticketRouter);
+        this.router.use('/ticket', ticketRouter);
     }
 
     getRouter() {

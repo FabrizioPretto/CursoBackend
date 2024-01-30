@@ -6,7 +6,7 @@ export default class MongoDao {
 
     async getAll() {
         try {
-            const response = await this.model.find({}).lean();
+            const response = await this.model.find({})              //.lean();
             return response;
         } catch (error) {
             console.log(error);
@@ -15,7 +15,7 @@ export default class MongoDao {
 
     async getById(id) {
         try {
-            const response = await this.model.findById(id).lean();;
+            const response = await this.model.findById(id);
             return response;
         } catch (error) {
             console.log(error);

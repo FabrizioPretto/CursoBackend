@@ -1,6 +1,114 @@
 import factory from '../persistence/daos/factory.js';
-const { cartDao } = factory;
+import Services from './classServices.js';
+const { cartDao, prodDao } = factory;
 
+
+export default class CartServices extends Services {
+    constructor() {
+        super(cartDao);
+    };
+
+    async remove(id) {
+        try {
+            const cartToDel = await cartDao.delete(id.toString());
+            if (!cartToDel) return false;
+            else return cartToDel;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async addProdToCart(cartId, prodId) {
+        try {
+            let existCart = await cartDao.getById(cartId);
+
+            if (!existCart) return false;
+
+            const existProd = await prodDao.getById(prodId);
+
+            if (!existProd) return false;
+
+            const existProdInCart = existCart.products.find((p) => {
+                return p.product._id.toString() === prodId.toString();
+            })
+
+            if (existProdInCart) {
+                existProdInCart.quantity++;
+                existCart.save();
+                return existProdInCart;
+            }
+            else { return await cartDao.addProdToCart(existCart, prodId) };
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async removeProdFromCart(cartId, prodId) {
+        try {
+            const existCart = await cartDao.getById(cartId);
+
+            if (!existCart) return false//throw new error("Cart not found");
+
+            const existProd = await prodDao.getById(prodId);
+
+            if (!existProd) return false//throw new error("Product not found");
+
+            const existProdInCart = existCart.products.find((p) => p.product._id.toString() === prodId.toString());
+            //console.log(existProdInCart.quantity);
+            if (existProdInCart && existProdInCart.quantity > 1) {
+                existProdInCart.quantity--;
+                await existCart.save();
+                return existProdInCart;
+            }
+            else return await cartDao.removeProdFromCart(existCart, existProd);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async updateProdQuantityToCart(cartId, prodId, quantity) {
+        try {
+            const existCart = await cartDao.getById(cartId);
+
+            if (!existCart) return false;
+
+            const existProd = existCart.products.find((p) => p.product._id.toString() === prodId.toString());
+
+            if (!existProd) return false;
+
+            if (quantity <= 0) return false;
+
+            return await cartDao.updateProdQuantityToCart(existCart, existProd, quantity);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async clearCart(cartId) {
+        try {
+            const existCart = await cartDao.getById(cartId);
+
+            if (!existCart) return false;
+            else return await cartDao.clearCart(existCart);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+/*
 export const getAll = async () => {
     try {
         return await cartDao.getAll();
@@ -53,7 +161,7 @@ export const addProduct = async (cid, pid) => {
         const product = pid;
         if (!cart || !product) return false;
         else {
-            const response = await cartDao.addProductToCart(cart, product);
+            const response = await cartDao.addProdToCart(cart, product);
             return response;
         }
     } catch (error) {
@@ -72,7 +180,7 @@ export const removeAll = async (cid) => {
         console.log(error);
     }
 };
-
+*/
 
 
 

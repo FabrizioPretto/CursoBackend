@@ -1,9 +1,12 @@
 import Services from "./classServices.js";
 import factory from "../persistence/daos/factory.js";
 const { userDao } = factory;
-import { generateToken } from '../jwt/auth.js';
+import jwt from "jsonwebtoken";
 import UserRepository from '../repository/userReporistory.js';
 const userRepository = new UserRepository();
+import "dotenv/config";
+const SECRET_KEY_JWT = process.env.SECRET_KEY_JWT;
+
 
 export default class UserServices extends Services {
     constructor() {
@@ -24,9 +27,15 @@ export default class UserServices extends Services {
         }
     }
 
-    #generateTokenService = async (user) => {
+    #generateTokenService(user) {
         try {
-            return generateToken(user);
+
+            const payload = {
+                userId: user._id,
+            };
+
+            const token = jwt.sign(payload, SECRET_KEY_JWT, { expiresIn: "10m" });
+            return token;
         }
         catch (error) {
             console.log(error);
@@ -44,7 +53,12 @@ export default class UserServices extends Services {
     async login(user) {
         try {
             const userExists = await userDao.login(user);
-            if (userExists) return this.#generateTokenService(user);
+            //console.log("userExists ", userExists);
+            if (userExists) {
+                const token = this.#generateTokenService(userExists);
+                //console.log("Token ", token);
+                return token;
+            }
             else return false;
         } catch (error) {
             console.log(error);

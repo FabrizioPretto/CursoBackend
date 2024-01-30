@@ -1,23 +1,23 @@
 import { Router } from "express";
-import * as controller from '../controllers/cartControllers.js';
-
+import CartControllers from "../controllers/cartControllers.js";
+const controllers = new CartControllers();
 const router = Router();
 
-router.post('/', controller.create);
+router.post('/', controllers.create);
 
-router.post('/:idCart/product/:idProd', controller.addProdToCart);
+router.post('/:idCart/product/:idProd', controllers.addProdToCart);
 
-router.get('/', controller.getAll);
+router.get('/', controllers.getAll);
 
-router.get('/:id', controller.getById);
+router.get('/:id', controllers.getByIdWithPopulate);//controllers.getById
 
-router.delete('/:cid/product/:pid', controller.removeProdToCart);
+router.delete('/:cid/product/:pid', controllers.removeProdFromCart);
 
-router.delete('/:id', controller.remove);
+router.delete('/:id', controllers.remove);
 
-router.put('/:id', controller.update);
+router.put('/:id', controllers.update);//Actualiza Stock
 
-router.put('/:cid/product/:pid', controller.updateProdQuantityToCart);
+router.put('/:cid/product/:pid', controllers.updateProdQuantityToCart);
 
 
 export default router;

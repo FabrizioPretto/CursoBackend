@@ -39,6 +39,7 @@ export default class UserDaoMySql extends MySqlDao {
     async login(user) {
         try {
             const { email, password } = user;
+            console.log("userDao::: ", user);
             const existUser = await this.getByEmail(email);
             if (existUser) {
                 const passValid = isValidPass(password, existUser);
