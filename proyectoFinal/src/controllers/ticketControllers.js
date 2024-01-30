@@ -1,5 +1,5 @@
 import Controllers from './classControllers.js';
-import { createResponse } from '../utils.js';
+import { createResponse } from '../utils/utils.js';
 import ticketServices from '../services/ticketServices.js';
 const services = new ticketServices();
 

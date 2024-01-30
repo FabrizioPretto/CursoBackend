@@ -1,4 +1,4 @@
-import { __dirname } from "../utils.js";
+import { __dirname } from "../utils/utils.js";
 
 import ProductMongoDao from '../persistence/daos/mongodb/products/productDao.js';
 const productsDao = new ProductMongoDao();

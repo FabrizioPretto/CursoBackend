@@ -1,4 +1,4 @@
-import { __dirname } from "../utils.js";
+import { __dirname } from "../utils/utils.js";
 //import { ProductManagerFS } from "../daos/fileSystem/productManager.js";
 //const productManagerFS = new ProductManagerFS('./src/files/products.json');
 import { Router } from "express";

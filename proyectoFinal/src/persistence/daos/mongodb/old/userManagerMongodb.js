@@ -1,4 +1,4 @@
-import { createHash, isValidPass } from '../../../../utils.js';
+import { createHash, isValidPass } from '../../../../utils/utils.js';
 import { UserModel } from "../users/userModel.js";
 
 export class UserManagerMondoDB {

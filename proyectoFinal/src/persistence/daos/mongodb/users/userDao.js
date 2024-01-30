@@ -1,4 +1,4 @@
-import { createHash, isValidPass } from '../../../../utils.js';
+import { createHash, isValidPass } from '../../../../utils/utils.js';
 import MongoDao from "../mongoDao.js";
 import { UserModel } from "./userModel.js";
 

@@ -3,11 +3,25 @@ import factory from "../persistence/daos/factory.js";
 const { prodDao } = factory;
 import ProductRepository from "../repository/productRepository.js";
 const prodRepository = new ProductRepository();
+import { generateMockProducts } from '../utils/utils.js';
 
 export default class ProductService extends Services {
 
     constructor() {
         super(prodDao);
+    }
+
+    async generateMockProducts(quantity) {
+        try {
+            const productsArray = [];
+            for (let i = 0; i < quantity; i++) {
+                let product = generateMockProducts();
+                productsArray.push(product);
+            }
+            return productsArray;
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
     aggregationBySort = async (order) => {

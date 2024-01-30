@@ -3,7 +3,7 @@ import UserServices from "../services/userServices.js";
 const userServices = new UserServices();
 import ProductService from "../services/productServices.js";
 const productServices = new ProductService();
-import { createResponse } from "../utils.js";
+import { createResponse } from "../utils/utils.js";
 import { generateToken } from "../jwt/auth.js";
 
 

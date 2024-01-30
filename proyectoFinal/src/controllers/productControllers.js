@@ -1,14 +1,25 @@
 import Controllers from "./classControllers.js";
-import { createResponse } from "../utils.js";
+import { createResponse } from "../utils/utils.js";
 import ProductService from "../services/productServices.js";
 const productService = new ProductService();
+import { HttpResponse, errorsDictionary } from "../utils/httpResponse.js";
+const httpResponse = new HttpResponse();
 
 export default class ProductController extends Controllers {
     constructor() {
         super(productService);
     }
 
-
+    generateMockProducts = async (req, res, next) => {
+        try {
+            let quantity = 100;
+            const response = await productService.generateMockProducts(quantity);
+            if (!response) return httpResponse.ServerError(res, errorsDictionary.ERROR_MOCK_PRODUCTS);
+            else return httpResponse.Ok(res, response);
+        } catch (error) {
+            next(error);
+        }
+    }
 
     aggregationBySort = async (req, res, next) => {
         try {

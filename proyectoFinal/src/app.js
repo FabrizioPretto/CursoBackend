@@ -1,17 +1,10 @@
 import express from "express";
 import "./config/connection.js";
-/*import productRouter from '../src/api/productRouter.js';
-import cartRouter from '../src/api/cartRouter.js';
-import viewRealTimeProductRouter from './api/viewRealTimeProductsRouter.js';
-import viewsRouter from './api/viewsRouter.js';
-import userRouter from './api/userRouter.js';*/
 import MainRouter from "./routes/index.js";
 const mainRouter = new MainRouter();
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
-import { __dirname } from "./utils.js";
-//import { ProductManagerMongoDB } from "./daos/mongodb/productMongodbManager.js";
-//const productManager = new ProductManagerMongoDB();
+import { __dirname } from "../src/utils/utils.js";
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
@@ -20,10 +13,9 @@ import passport from "passport";
 import './passport/githubStrategy.js';
 import './passport/googleStrategy.js';
 import 'dotenv/config';
+import { errorHandler } from "./middlewares/errorHandler.js";
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;//Agregué esta línea porque recibíaun error "error self signed certificate in certificate chain"
-//initMongoDB();
-/*const secretKey = '1234';
-app.use(cookieParser(secretKey));*/
+
 
 const app = express();
 const mongoStoreOptions = {
@@ -42,9 +34,6 @@ const mongoStoreOptions = {
     }
 };
 
-
-
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(session(mongoStoreOptions));
@@ -61,15 +50,7 @@ app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
 
 app.use('/', mainRouter.getRouter());
-
-/*app.use('/api/products', productRouter);
-app.use('/api/carts', cartRouter);
-app.use('/realtimeproducts', viewRealTimeProductRouter);
-app.use('/', viewsRouter);
-app.use('/users', userRouter);*/
-
-//const persistence = process.env.PERSISTENCE;
-
+app.use(errorHandler);
 
 
 const PORT = process.env.PORT || 8080;
@@ -97,3 +78,27 @@ socketServer.on('connection', (socket) => {
 });
 
 
+/*
+OLD
+import productRouter from '../src/api/productRouter.js';
+import cartRouter from '../src/api/cartRouter.js';
+import viewRealTimeProductRouter from './api/viewRealTimeProductsRouter.js';
+import viewsRouter from './api/viewsRouter.js';
+import userRouter from './api/userRouter.js';
+
+//import { ProductManagerMongoDB } from "./daos/mongodb/productMongodbManager.js";
+//const productManager = new ProductManagerMongoDB();
+
+//initMongoDB();
+const secretKey = '1234';
+app.use(cookieParser(secretKey));
+
+app.use('/api/products', productRouter);
+app.use('/api/carts', cartRouter);
+app.use('/realtimeproducts', viewRealTimeProductRouter);
+app.use('/', viewsRouter);
+app.use('/users', userRouter);
+
+//const persistence = process.env.PERSISTENCE;
+
+*/
