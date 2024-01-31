@@ -5,6 +5,9 @@ import ProductService from "../services/productServices.js";
 const productServices = new ProductService();
 import { createResponse } from "../utils/utils.js";
 import { generateToken } from "../jwt/auth.js";
+import { HttpResponse, errorsDictionary } from "../utils/httpResponse.js";
+const httpResponse = new HttpResponse();
+
 
 
 export default class UserController extends Controllers {
@@ -14,9 +17,11 @@ export default class UserController extends Controllers {
 
     register = async (req, res, next) => {
         try {
-            const newUser = await userServices.register(req.body);
-            if (!newUser) createResponse(res, 404, 'User already exists');
-            else createResponse(res, 200, newUser);
+            const { first_name, last_name, email, age, password } = req.body;
+            const user = { first_name, last_name, email, age, password };
+            const newUser = await userServices.register(user);
+            if (!newUser) return httpResponse.Forbidden(res, errorsDictionary.ERROR_USER_EXISTS); //createResponse(res, 404, 'User already exists');
+            else return httpResponse.Ok(res, newUser);
         } catch (error) {
             next(error.message);
         }
@@ -27,10 +32,11 @@ export default class UserController extends Controllers {
             //const { email, password } = req.body;
             const token = await userServices.login(req.body);
             console.log("user controller:::", token);
-            if (!token) createResponse(res, 404, 'Error login/generate token');
+            if (!token) return httpResponse.Unauthorized(res, errorsDictionary.ERROR_LOGIN); //createResponse(res, 404, 'Error login/generate token');
             else {
                 //const access_token = generateToken(user);
-                res.header('Authorization', token).json({ msg: "Login Ok", token });
+                return httpResponse.Ok(res, token);
+                //res.header('Authorization', token).json({ msg: "Login Ok", token });
                 //createResponse(res, 200, token);
             }
         } catch (error) {
@@ -39,16 +45,7 @@ export default class UserController extends Controllers {
     }
 
 
-    /*profile = async (req, res, next) => {
-        try {
-            const { first_name, last_name, email, role } = req.user;
-            createResponse(res, 200, { first_name, last_name, email, role });
-        } catch (error) {
-            next(error.message);
-        }
-    }*/
-
-
+    //Actualizar
     profile = async (req, res, next) => {
         try {
             const info = await userServices.getUserDTO(req.session.passport.user) //userServices.getById(req.session.passport.user);

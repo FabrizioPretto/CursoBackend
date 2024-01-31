@@ -14,7 +14,14 @@ export default class UserServices extends Services {
     }
 
     getUserByEmail = async (email) => {
-        return await userDao.getUserByEmail(email);
+        try {
+            const user = await userDao.getUserByEmail(email);
+            if (!user) return false;
+            else return user;
+        } catch (error) {
+            throw new Error(error);
+        }
+
     }
 
     getUserById = async (id) => {
@@ -23,7 +30,7 @@ export default class UserServices extends Services {
             if (!user) return false;
             else return user;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -38,17 +45,20 @@ export default class UserServices extends Services {
             return token;
         }
         catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
     async register(user) {
         try {
-            return await userDao.register(user);
+            const newUser = await userDao.register(user);
+            if (!newUser) throw new Error("Validation Error!");
+            else return newUser;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
+
 
     async login(user) {
         try {
@@ -61,7 +71,7 @@ export default class UserServices extends Services {
             }
             else return false;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -71,7 +81,7 @@ export default class UserServices extends Services {
             if (!user) return false;
             else return user;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 

@@ -24,11 +24,10 @@ export default class UserDaoMySql extends MySqlDao {
             const { email, password } = user;
             const existUser = await this.getByEmail(email);
             if (!existUser) {
-                const newUser = await this.model.create({
-                    ...user, password: createHash(password)
-                })
-                const token = this.#generateToken(newUser);
-                return token;
+                const newUser = this.model.create({ ...user, password: createHash(password) })
+                return newUser;
+                //const token = this.#generateToken(newUser);
+                //return token;
             }
             else return false;
         } catch (error) {
@@ -36,10 +35,32 @@ export default class UserDaoMySql extends MySqlDao {
         }
     }
 
+    /*  async createUser(user) {
+    try {
+      const { email, password } = user;
+      const existUser = await userModel.findOne({email});
+      if(!existUser){
+        if(email === 'adminCoder@coder.com' && password === 'adminCoder123'){
+          const newUser = await userModel.create({...user, password: createHash(password), role: 'admin'})
+          return newUser;
+        } else {
+          const newUser = await userModel.create({...user, password: createHash(password)})
+          return newUser;
+        }
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
+  }*/
+
+
+
     async login(user) {
         try {
             const { email, password } = user;
-            console.log("userDao::: ", user);
             const existUser = await this.getByEmail(email);
             if (existUser) {
                 const passValid = isValidPass(password, existUser);

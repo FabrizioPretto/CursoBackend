@@ -24,28 +24,11 @@ export default class ProductService extends Services {
         }
     }
 
-    aggregationBySort = async (order) => {
-        try {
-            return await prodDao.aggregationBySort(order);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    aggregationByLimit = async (docLimit) => {
-        try {
-            return await prodDao.aggregationByLimit(docLimit);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-
     getAllProducts = async (page, limit) => {
         try {
             return await prodDao.getProducts(page, limit);
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -53,7 +36,7 @@ export default class ProductService extends Services {
         try {
             return await prodDao.getAllProducts();
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -64,7 +47,7 @@ export default class ProductService extends Services {
             if (!prod) return false;
             else return prod;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -74,7 +57,7 @@ export default class ProductService extends Services {
             if (prod === false) return false;
             else return prod;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -84,7 +67,7 @@ export default class ProductService extends Services {
             if (newProd === false) return false;
             else return newProd;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -94,7 +77,7 @@ export default class ProductService extends Services {
             if (prodUpd === false) return false;
             else return prodUpd;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -104,9 +87,26 @@ export default class ProductService extends Services {
             if (prodDelete === false) return false;
             else return prodDelete;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
+
+    aggregationBySort = async (order) => {
+        try {
+            return await prodDao.aggregationBySort(order);
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    aggregationByLimit = async (docLimit) => {
+        try {
+            return await prodDao.aggregationByLimit(docLimit);
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
 
 }
 

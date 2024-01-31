@@ -7,13 +7,13 @@ import { isAuth } from "../middlewares/isAuth.js";
 
 const router = Router();
 
+router.post('/register', controllers.register);
+router.post('/login', controllers.login);
+router.get('/profile', checkToken, controllers.profile);//FUNCIONA EN HANDLEBARS
+
 /*router.post('/register', passport.authenticate('signup'), controller.registerResponse);
 router.post('/login', passport.authenticate('login'), controller.loginResponse);
 router.get('/profile', checkToken, controller.profile);*/
-
-router.post('/register', controllers.register);
-router.post('/login', controllers.login);
-router.get('/profile', checkToken, controllers.profile);
 
 router.get('/private', checkToken, (req, res) => {
     const { first_name, last_name, email, role } = req.user;

@@ -54,7 +54,7 @@ export default class TicketService extends Services {
             //retornar el ticket
             return ticket;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 }

@@ -2,21 +2,22 @@ import Controllers from './classControllers.js';
 import CartServices from '../services/cartServices.js';
 import { createResponse } from '../utils/utils.js';
 const services = new CartServices();
+import { HttpResponse, errorsDictionary } from '../utils/httpResponse.js';
+const httpResponse = new HttpResponse();
 
 export default class CartControllers extends Controllers {
     constructor() {
         super(services);
     }
 
-
     remove = async (req, res, next) => {
         try {
             const { id } = req.params;
             const cartToDel = await services.remove(id.toString());
-            if (!cartToDel) createResponse(res, 404, "Error delete cart")
-            else createResponse(res, 200, `Cart id: ${id} deleted`)
+            if (!cartToDel) return httpResponse.ServerError(res, errorsDictionary.ERROR_DELETE_CART) //createResponse(res, 404, "Error delete cart")
+            else return httpResponse.Ok(res, cartToDel);
         } catch (error) {
-            next(error.message)
+            next(error);
         }
     }
 
@@ -24,10 +25,10 @@ export default class CartControllers extends Controllers {
         try {
             const { idCart, idProd } = req.params;
             const newProdToUserCart = await services.addProdToCart(idCart, idProd);
-            if (!newProdToUserCart) createResponse(res, 404, "Error adding product to cart");
-            else createResponse(res, 200, newProdToUserCart);
+            if (!newProdToUserCart) return httpResponse.ServerError(res, errorsDictionary.ERROR_ADD_PRODUCT_TO_CART); //createResponse(res, 404, "Error adding product to cart");
+            else return httpResponse.Ok(res, newProdToUserCart);
         } catch (error) {
-            next(error.message)
+            next(error);
         }
     }
 
@@ -35,10 +36,10 @@ export default class CartControllers extends Controllers {
         try {
             const { cid, pid } = req.params;
             const delProdFromUserCart = await services.removeProdFromCart(cid, pid);
-            if (!delProdFromUserCart) createResponse(res, 404, "Error removing product from cart");
-            else createResponse(res, 200, delProdFromUserCart);
+            if (!delProdFromUserCart) return httpResponse.ServerError(res, errorsDictionary.ERROR_REMOVE_PRODUCT_FROM_CART);//createResponse(res, 404, "Error removing product from cart");
+            else return httpResponse.Ok(res, delProdFromUserCart);
         } catch (error) {
-            next(error.message)
+            next(error);
         }
     }
 
@@ -47,11 +48,10 @@ export default class CartControllers extends Controllers {
             const { cid, pid } = req.params;
             const { quantity } = req.body;
             const updateProdQuantity = await services.updateProdQuantityToCart(cid, pid, quantity);
-            if (!updateProdQuantity) createResponse(res, 404, "Error updating product quantity in cart");
-            else createResponse(res, 200, updateProdQuantity);
-
+            if (!updateProdQuantity) return httpResponse.ServerError(res, errorsDictionary.ERROR_UPDATE_QUANTITY_IN_CART); //createResponse(res, 404, "Error updating product quantity in cart");
+            else return httpResponse.Ok(res, updateProdQuantity);
         } catch (error) {
-            next(error.message)
+            next(error);
         }
     }
 
@@ -59,10 +59,10 @@ export default class CartControllers extends Controllers {
         try {
             const { idCart } = req.params;
             const clearCart = await services.clearCart(idCart);
-            if (!clearCart) createResponse(res, 404, "Error emptying cart");
-            else createResponse(res, 200, clearCart);
+            if (!clearCart) return httpResponse.ServerError(res, errorsDictionary.ERROR_EMPTYING_CART);//createResponse(res, 404, "Error emptying cart");
+            else return httpResponse.Ok(res, clearCart);
         } catch (error) {
-            next(error.message)
+            next(error);
         }
     }
 
@@ -71,10 +71,10 @@ export default class CartControllers extends Controllers {
             const { id } = req.params;
             const response = await services.getById(id);
             await response.populate('products.product');
-            if (!response) createResponse(res, 404, { method: 'getById', error: 'Cart not found' })
-            else createResponse(res, 200, response);
+            if (!response) return httpResponse.ServerError(res, errorsDictionary.ERROR_CART_NOT_FOUND); //createResponse(res, 404, { method: 'getById', error: 'Cart not found' })
+            else return httpResponse.Ok(res, response);
         } catch (error) {
-            next(error.message);
+            next(error);
         }
     }
 

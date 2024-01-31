@@ -21,13 +21,69 @@ export default class ProductController extends Controllers {
         }
     }
 
+
+    //NUEVO
+    getProdById = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const prod = await productService.getProdById(id)//this.service.getProdById(id)
+            if (!prod) return httpResponse.NotFound(res, errorsDictionary.ERROR_GET_BY_ID);
+            else return httpResponse.Ok(res, prod);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getProductById = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const product = await productService.getProductById(id);
+            if (product === false) return httpResponse.NotFound(res, errorsDictionary.PRODUCT_NOT_FOUND);//res.status(404).json({ msg: "Product not found" });
+            else return httpResponse.Ok(res, product);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    createProduct = async (req, res, next) => {
+        try {
+            const newProd = await productService.createProduct(req.body);
+            if (newProd === false) return httpResponse.NotFound(res, errorsDictionary.ERROR_CREATE_PRODUCT);//res.status(404).json({ msg: "Error create product!" });
+            else return httpResponse.Ok(res, newProd)//res.status(200).json(newProd);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    updateProduct = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const prodUpdt = await productService.updateProduct(req.body, id);
+            if (prodUpdt === false) return httpResponse.NotFound(res, errorsDictionary.ERROR_UPDATE_PRODUCT);//res.status(404).json({ msg: "Error update product!" });
+            else return httpResponse.Ok(res, prodUpdt); //res.status(200).json({ msg: `Product id: ${id} deleted` });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    deleteProduct = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const prodDel = await productService.deleteProduct(id);
+            if (prodDel === false) return httpResponse.NotFound(res, errorsDictionary.ERROR_DELETE_PRODUCT) //res.status(404).json({ msg: "Error delete product!" });
+            else return httpResponse.Ok(res, prodDel); //res.status(200).json(prodDel);
+        } catch (error) {
+            next(error);
+        }
+    }
+
     aggregationBySort = async (req, res, next) => {
         try {
             const { order } = req.query;
             const orderProducts = await productService.aggregationBySort(order);
             res.status(200).json(orderProducts);
         } catch (error) {
-            next(error.message);
+            next(error);
         }
     }
 
@@ -37,7 +93,7 @@ export default class ProductController extends Controllers {
             const productsLimit = await productService.aggregationByLimit(Number(limit));
             res.status(200).json(productsLimit);
         } catch (error) {
-            next(error.message)
+            next(error);
         }
     }
 
@@ -65,64 +121,10 @@ export default class ProductController extends Controllers {
             })
 
         } catch (error) {
-            next(error.message);
+            next(error);
         }
     }
 
-    //NUEVO
-    getProdById = async (req, res, next) => {
-        try {
-            const { id } = req.params;
-            const prod = await productService.getProdById(id)//this.service.getProdById(id)
-            if (!prod) return createResponse(res, 404, { msg: 'create', error: 'getById failed' })
-            else return createResponse(res, 200, prod);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    getProductById = async (req, res, next) => {
-        try {
-            const { id } = req.params;
-            const product = await productService.getProductById(id);
-            if (product === false) res.status(404).json({ msg: "Product not found" });
-            else res.status(200).json(product);
-        } catch (error) {
-            next(error.message);
-        }
-    }
-
-    createProduct = async (req, res, next) => {
-        try {
-            const newProd = await productService.createProduct(req.body);
-            if (newProd === false) res.status(404).json({ msg: "Error create product!" });
-            else res.status(200).json(newProd);
-        } catch (error) {
-            next(error.message);
-        }
-    }
-
-    updateProduct = async (req, res, next) => {
-        try {
-            const { id } = req.params;
-            const prodUpdt = await productService.updateProduct(req.body, id);
-            if (prodUpdt === false) res.status(404).json({ msg: "Error update product!" });
-            else res.status(200).json({ msg: `Product id: ${id} deleted` });
-        } catch (error) {
-            next(error.message);
-        }
-    }
-
-    deleteProduct = async (req, res, next) => {
-        try {
-            const { id } = req.params;
-            const prodDel = await productService.deleteProduct(id);
-            if (prodDel === false) res.status(404).json({ msg: "Error delete product!" });
-            else res.status(200).json(prodDel);
-        } catch (error) {
-            next(error.message);
-        }
-    }
 }
 
 /*

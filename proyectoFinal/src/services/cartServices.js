@@ -14,7 +14,7 @@ export default class CartServices extends Services {
             if (!cartToDel) return false;
             else return cartToDel;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -40,7 +40,7 @@ export default class CartServices extends Services {
             else { return await cartDao.addProdToCart(existCart, prodId) };
 
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -64,7 +64,7 @@ export default class CartServices extends Services {
             else return await cartDao.removeProdFromCart(existCart, existProd);
 
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -83,7 +83,7 @@ export default class CartServices extends Services {
             return await cartDao.updateProdQuantityToCart(existCart, existProd, quantity);
 
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
@@ -95,7 +95,7 @@ export default class CartServices extends Services {
             else return await cartDao.clearCart(existCart);
 
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     }
 
