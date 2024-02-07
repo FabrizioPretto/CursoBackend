@@ -11,6 +11,7 @@ import smsRouter from '../routes/smsRouter.js';
 import wsRouter from '../routes/wsRouter.js';
 import ticketRouter from '../routes/ticketRouter.js';
 import mockingProductsRouter from '../routes/mockingProductsRouter.js';
+import loggerTestRouter from '../routes/loggerTestRouter.js';
 
 export default class MainRouter {
     constructor() {
@@ -29,6 +30,7 @@ export default class MainRouter {
         this.router.use('/', wsRouter);
         this.router.use('/ticket', ticketRouter);
         this.router.use('/mockingproducts', mockingProductsRouter);
+        this.router.use('/loggertest', loggerTestRouter);
     }
 
     getRouter() {

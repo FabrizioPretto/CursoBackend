@@ -5,6 +5,7 @@ const services = new CartServices();
 import { HttpResponse, errorsDictionary } from '../utils/httpResponse.js';
 const httpResponse = new HttpResponse();
 
+
 export default class CartControllers extends Controllers {
     constructor() {
         super(services);
@@ -59,7 +60,9 @@ export default class CartControllers extends Controllers {
         try {
             const { idCart } = req.params;
             const clearCart = await services.clearCart(idCart);
-            if (!clearCart) return httpResponse.ServerError(res, errorsDictionary.ERROR_EMPTYING_CART);//createResponse(res, 404, "Error emptying cart");
+            if (!clearCart) {
+                return httpResponse.ServerError(res, errorsDictionary.ERROR_EMPTYING_CART);
+            }
             else return httpResponse.Ok(res, clearCart);
         } catch (error) {
             next(error);

@@ -1,5 +1,6 @@
 import MongoDao from '../mongoDao.js';
 import { CartModel } from "./cartModel.js";
+import { logger } from '../../../../utils/logsConfig.js';
 
 export default class CartDaoMongoDB extends MongoDao {
     constructor() {
@@ -17,7 +18,8 @@ export default class CartDaoMongoDB extends MongoDao {
             console.log("response ", response);
             return response;
         } catch (error) {
-            console.log(error);
+            logger.error("Error al agregar producto al carrito");
+            //console.log(error);
         };
     };
 
