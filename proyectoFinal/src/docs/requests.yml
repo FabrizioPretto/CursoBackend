@@ -2,6 +2,56 @@ components:
   parameters:
     schemas:  
       Products:
+        GetProducts:
+          type: array
+        required: 
+          -id 
+          -title
+          -description
+          -code
+          -price
+          -status
+          -stock 
+          -category
+          -thumbnail
+        properties:
+          id:
+            type: String
+            description: Identificador del producto
+          title:
+            type: String
+            description: Nombre del producto
+          description:
+            type: String
+            description: Descripción del producto
+          code:
+            type: Number
+            description: Código del producto
+          price:
+            type: Number
+            description: Precio del producto
+          status:
+            type: String
+            description: Estado "Activo/Inactivo" del producto
+          stock:
+            type: Number
+            description: Disponibilidad del producto
+          category:
+            type: String
+            description: Categoría del producto
+          thumbnail:
+            type: String
+            description: Imagen del producto
+        example:
+          id: 10,
+          title: mantel,
+          description: mediano,
+          status: true,
+          code: 10,
+          price: 2500,
+          stock: 15,
+          category: bazar,
+          thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU
       Carts:
         CreateCart:
           type: object
@@ -21,7 +71,7 @@ components:
               description: Versión de modificación en base de datos
           example:
             _id: 65de7d5b1b8e52b4e8750ef4,
-            products: [],
+            products: array,
             __v: 0
       ProductNewPost:
         type: object

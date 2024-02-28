@@ -8,7 +8,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/commponents/parameters/schemas/Carts/CreateCart'
+              $ref: '#/components/schemas/Carts/CreateCart'
         required: true
       responses:
           200:
@@ -16,17 +16,23 @@ paths:
             content:
               application/json:
                 schema: 
-                  $ref: '#/components/schema/Carts/CreateCart'
+                  $ref: '#/components/schemas/Carts/CreateCart'
+          404:
+            description: Error creando el carrito
+            content: 
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/NotFound'
   /api/products:
     get:
       tags:
-      - Carts
+      - Products
       summary: Se obtiene un listado de productos.
       requestBody:
         content:
           application/json:
             schema:
-              $ref:'#/commponents/parameters/schemas/Products'
+              $ref:'#/components/parameters/schemas/Products/GetAllProducts'
         required: true
       responses:
           200:
@@ -34,13 +40,13 @@ paths:
             content:
               application/json:
                 schema: 
-                  $ref: '#/commponents/parameters/schemas/Products/GetAllProducts'
+                  $ref:'#/components/parameters/schemas/Products/GetAllProducts'
           404:
             description: error interno del servidor
             content: 
               application/json:
                 schema: 
-                  $ref: '#/commponents/parameters/schemas/Products/NotFound'
+                  $ref: '#/components/schemas/NotFound'
 
 
   

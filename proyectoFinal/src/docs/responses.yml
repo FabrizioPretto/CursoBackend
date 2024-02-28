@@ -1,5 +1,5 @@
 components:
-  schema:
+  schemas:
     Products:
       GetAllProducts:
         type: array
@@ -49,49 +49,49 @@ components:
           category: bazar,
           thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU
           __v: 0
-    Carts:
-      GetAllCarts:
-        type: array
-        properties: 
-          message:
-            type: array
-            description: Un arreglo, que contiene arreglos de productos
-      GetCartById:
-        type: object
-        properties: 
-          message:
-            type: array
-            description: Un objeto, que contiene un arreglo de productos
-      CreateCart:
-        type: object
-        properties:
-          message:
-            type: array
-            description: Un objeto, que contiene un arreglo de productos
-      AddProductInCart:
-        type: object
-        properties:
-          message:
-            type: object
-            description: Agrega un producto al carrito indicado
-      DeleteCart:
-        type: object
-        properties:
-          message:
-            type: array
-            description: Elimina un carrito
-      DeleteProdInCart:
-        type: object
-        properties:
-          message:
-            type: array
-            description: Elimina una unidad del producto en el carrito, mientras sea mayor a cero.
-      UpdateProd:
-        type: object
-        properties:
-          message:
-            type: object
-            description:  Actualiza la cantidad de productos y unidades en el carrito
+      Carts:
+        GetAllCarts:
+          type: array
+          properties: 
+            message:
+              type: array
+              description: Un arreglo, que contiene arreglos de productos
+        GetCartById:
+          type: object
+          properties: 
+            message:
+              type: array
+              description: Un objeto, que contiene un arreglo de productos
+        CreateCart:
+          type: object
+          properties:
+            message:
+              type: array
+              description: Un objeto, que contiene un arreglo de productos
+        AddProductInCart:
+          type: object
+          properties:
+            message:
+              type: object
+              description: Agrega un producto al carrito indicado
+        DeleteCart:
+          type: object
+          properties:
+            message:
+              type: array
+              description: Elimina un carrito
+        DeleteProdInCart:
+          type: object
+          properties:
+            message:
+              type: array
+              description: Elimina una unidad del producto en el carrito, mientras sea mayor a cero.
+        UpdateProd:
+          type: object
+          properties:
+            message:
+              type: object
+              description:  Actualiza la cantidad de productos y unidades en el carrito
       UpdateQuantityInProd:
         type: object
         properties: 
