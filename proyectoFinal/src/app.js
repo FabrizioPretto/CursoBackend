@@ -15,9 +15,17 @@ import './passport/googleStrategy.js';
 import 'dotenv/config';
 import { errorHandler } from "./middlewares/errorHandler.js";
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;//Agregué esta línea porque recibíaun error "error self signed certificate in certificate chain"
+import { info } from "./docs/info.js";
+import swaggerUI from 'swagger-ui-express';
+import swaggerJSDOC from 'swagger-jsdoc';
+
 
 
 const app = express();
+
+const specs = swaggerJSDOC(info);
+
+
 const mongoStoreOptions = {
     store: MongoStore.create({
         mongoUrl: 'mongodb+srv://fgpretto:F4br1z10@pretto.aiozw0c.mongodb.net/ecommerce?retryWrites=true&w=majority',
@@ -34,6 +42,7 @@ const mongoStoreOptions = {
     }
 };
 
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs));
 app.use(express.json());
 app.use(cookieParser());
 app.use(session(mongoStoreOptions));

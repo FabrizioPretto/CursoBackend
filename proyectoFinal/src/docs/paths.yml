@@ -1,0 +1,46 @@
+paths: 
+  /api/carts:
+    post:
+      tags:
+      - Carts
+      summary: Creación de nuevo carrito en base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/commponents/parameters/schemas/Carts/CreateCart'
+        required: true
+      responses:
+          200:
+            description: Se registró un nuevo carrito.
+            content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schema/Carts/CreateCart'
+  /api/products:
+    get:
+      tags:
+      - Carts
+      summary: Se obtiene un listado de productos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:'#/commponents/parameters/schemas/Products'
+        required: true
+      responses:
+          200:
+            description: Se registró un nuevo carrito.
+            content:
+              application/json:
+                schema: 
+                  $ref: '#/commponents/parameters/schemas/Products/GetAllProducts'
+          404:
+            description: error interno del servidor
+            content: 
+              application/json:
+                schema: 
+                  $ref: '#/commponents/parameters/schemas/Products/NotFound'
+
+
+  

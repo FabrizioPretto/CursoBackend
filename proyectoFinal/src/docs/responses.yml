@@ -1,0 +1,120 @@
+components:
+  schema:
+    Products:
+      GetAllProducts:
+        type: array
+        properties:
+          _id: 
+            type: String
+            description: Identificador del producto en la base de datos
+          id: 
+            type: Number
+            description: Identificador del producto
+          title: 
+            type: String
+            description: Nombre del producto
+          description: 
+            type: String
+            description: Descripción del producto
+          code: 
+            type: Number
+            description: Código del producto
+          price: 
+            type: Number
+            description: Precio del producto
+          status: 
+            type: String
+            description: Estado "Activo/Inactivo" 
+          stock: 
+            type: Number
+            description: Disponibilidad del producto
+          category: 
+            type: String
+            description: Categoría del producto
+          thumbnail: 
+            type: String
+            description: Imagen del producto
+          __v: 
+            type: Number
+            description: Versión de modificación en la base de datos
+        example:
+          _id: 6570dbd81206a3d6aee59d00
+          id: 10,
+          title: mantel,
+          description: mediano,
+          status: true,
+          code: 10,
+          price: 2500,
+          stock: 15,
+          category: bazar,
+          thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU
+          __v: 0
+    Carts:
+      GetAllCarts:
+        type: array
+        properties: 
+          message:
+            type: array
+            description: Un arreglo, que contiene arreglos de productos
+      GetCartById:
+        type: object
+        properties: 
+          message:
+            type: array
+            description: Un objeto, que contiene un arreglo de productos
+      CreateCart:
+        type: object
+        properties:
+          message:
+            type: array
+            description: Un objeto, que contiene un arreglo de productos
+      AddProductInCart:
+        type: object
+        properties:
+          message:
+            type: object
+            description: Agrega un producto al carrito indicado
+      DeleteCart:
+        type: object
+        properties:
+          message:
+            type: array
+            description: Elimina un carrito
+      DeleteProdInCart:
+        type: object
+        properties:
+          message:
+            type: array
+            description: Elimina una unidad del producto en el carrito, mientras sea mayor a cero.
+      UpdateProd:
+        type: object
+        properties:
+          message:
+            type: object
+            description:  Actualiza la cantidad de productos y unidades en el carrito
+      UpdateQuantityInProd:
+        type: object
+        properties: 
+          message:
+            type: object
+            description: Actualiza la cantidad de unidades en el carrito de un producto
+      ValidationSchemaError:
+        type: object
+        properties:
+          message: 
+            type: string
+            description: Validation schema error
+    NotFound:
+      type: object
+      properties:
+        message: 
+          type: string
+          description: Error de servidor
+    ErrorGetById: 
+      type: object
+      properties:
+        message: 
+          type: string
+          description: No se encontró el ID en la base de datos
+
+
