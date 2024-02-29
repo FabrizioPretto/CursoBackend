@@ -52,11 +52,6 @@ paths:
           description: String id required
           schema: 
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/parameters/schemas/Carts/DeleteCart'
       responses:
         '200':
           description: Se eliminó el carrito solicitado.
@@ -110,11 +105,6 @@ paths:
           description: String id required
           schema: 
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Carts/GetCartById'
       responses:
         '200':
           description: Se modificó el carrito solicitado.
