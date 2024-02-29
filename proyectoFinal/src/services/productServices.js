@@ -73,7 +73,7 @@ export default class ProductService extends Services {
 
     updateProduct = async (obj, id) => {
         try {
-            const prodUpd = await prodDao.updateProduct(obj, id);
+            const prodUpd = await prodDao.update(obj, id);
             if (prodUpd === false) return false;
             else return prodUpd;
         } catch (error) {
@@ -83,7 +83,7 @@ export default class ProductService extends Services {
 
     deleteProduct = async (id) => {
         try {
-            const prodDelete = await prodDao.deleteProduct(id);
+            const prodDelete = await prodDao.delete(id);
             if (prodDelete === false) return false;
             else return prodDelete;
         } catch (error) {

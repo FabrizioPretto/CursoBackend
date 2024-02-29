@@ -2,51 +2,335 @@ paths:
   /api/carts:
     post:
       tags:
-      - Carts
+        - Carts
       summary: Creación de nuevo carrito en base de datos.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Carts/CreateCart'
-        required: true
       responses:
-          200:
-            description: Se registró un nuevo carrito.
-            content:
-              application/json:
-                schema: 
-                  $ref: '#/components/schemas/Carts/CreateCart'
-          404:
-            description: Error creando el carrito
-            content: 
-              application/json:
-                schema: 
-                  $ref: '#/components/schemas/NotFound'
-  /api/products:
+        '200':
+          description: Se registró un nuevo carrito.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Carts/CreateCart'
+        '500':
+          description: Error creando el carrito.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ServerError'
     get:
       tags:
-      - Products
-      summary: Se obtiene un listado de productos.
+        - Carts
+      summary: Se obtienen todos los carritos en la base de datos.
+      responses:
+        '200':
+          description: Se obtuvieron todos los carritos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Carts/GetAllCarts'
+        '500':
+          description: Error obteniendo los carritos.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ServerError'
+  /api/carts/{id}:  
+    delete:
+      tags: 
+        - Carts
+      summary: Se elimina el carrito indicado de la base de datos.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: String id required
+          schema: 
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref:'#/components/parameters/schemas/Products/GetAllProducts'
-        required: true
+              $ref: '#/components/parameters/schemas/Carts/DeleteCart'
       responses:
-          200:
-            description: Se registró un nuevo carrito.
-            content:
-              application/json:
-                schema: 
-                  $ref:'#/components/parameters/schemas/Products/GetAllProducts'
-          404:
-            description: error interno del servidor
-            content: 
-              application/json:
-                schema: 
-                  $ref: '#/components/schemas/NotFound'
-
-
-  
+        '200':
+          description: Se eliminó el carrito solicitado.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Carts/DeleteCart'
+        '500':
+          description: Error eliminando el carrito.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ServerError'
+    put:
+      tags:
+        - Carts
+      summary: Se actualiza el producto y la cantidad de unidades en el carrito de la base de datos.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: String id required
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Carts/UpdateProd'
+      responses:
+        '200':
+          description: Se modificó el carrito solicitado.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Carts/UpdateProd'
+        '500':
+          description: Error modificando el carrito.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ServerError'
+    get:
+      tags:
+        - Carts
+      summary: Se obtiene el carrito con el id solicitado de la base de datos.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: String id required
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Carts/GetCartById'
+      responses:
+        '200':
+          description: Se modificó el carrito solicitado.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Carts/GetCartById'
+        '500':
+          description: Error modificando el carrito.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ServerError'
+  /api/carts/{idCart}/product/{idProd}:
+    post:
+      tags: 
+        - Carts
+      summary: Se agrega una unidad del producto solicitado al carrito indicado de la base de datos.
+      parameters:
+        - in: path
+          name: idCart
+          required: true
+          description: String id required
+          schema: 
+            type: string
+        - in: path
+          name: idProd
+          required: true
+          description: String id required
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/Carts/AddProductInCart'
+      responses:
+        '200':
+          description: Se eliminó el carrito solicitado.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Carts/AddProductInCart'
+        '500':
+          description: Error eliminando el carrito.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ServerError'
+    put:
+      tags: 
+        - Carts
+      summary: Se agrega una unidad del producto solicitado al carrito indicado de la base de datos.
+      parameters:
+        - in: path
+          name: idCart
+          required: true
+          description: String id required
+          schema: 
+            type: string
+        - in: path
+          name: idProd
+          required: true
+          description: String id required
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/Carts/UpdateQuantityinProd'
+      responses:
+        '200':
+          description: Se eliminó el carrito solicitado.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Carts/UpdateQuantityinProd'
+        '500':
+          description: Error eliminando el carrito.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ServerError'
+    delete: 
+      tags: 
+        - Carts
+      summary: Se quita una unidad del producto solicitado al carrito indicado de la base de datos.
+      parameters:
+        - in: path
+          name: idCart
+          required: true
+          description: String id required
+          schema: 
+            type: string
+        - in: path
+          name: idProd
+          required: true
+          description: String id required
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/Carts/DeleteProdInCart'
+      responses:
+        '200':
+          description: Se eliminó el carrito solicitado.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Carts/DeleteProdInCart'
+        '500':
+          description: Error eliminando el carrito.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ServerError'
+  /api/products/{id}:
+    delete:
+      tags: 
+        - Products
+      summary: Se elimina el producto indicado de la base de datos.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: String id required
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/Products/DeleteId'
+      responses:
+        '200':
+          description: Se obtuvo el listado de productos.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Products/DeleteId'
+        '404':
+          description: Error interno del servidor.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/NotFound'
+    put:
+      tags: 
+        - Products
+      summary: Se modifica el producto indicado de la base de datos.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: String id required
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/Products/UpdateData'
+      responses:
+        '200':
+          description: Se obtuvo el listado de productos.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Products/UpdateData'
+        '404':
+          description: Error interno del servidor.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/NotFound'
+  /api/products:
+    get:
+      tags:
+        - Products
+      summary: Se obtiene un listado de productos de la base de datos.
+      responses:
+        '200':
+          description: Se obtuvo el listado de productos.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Products/GetAllProducts'
+        '404':
+          description: Error interno del servidor.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/NotFound'
+    post:
+      tags:
+        - Products
+      summary: Se crea un nuevo producto en la base de datos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Products/CreateProducts'
+      responses:
+        '200':
+          description: Se obtuvo el listado de productos.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Products/CreateProducts'
+        '404':
+          description: Error interno del servidor.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/NotFound'

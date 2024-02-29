@@ -1,64 +1,170 @@
 components:
   parameters:
-    schemas:  
+    schemas:
       Products:
-        GetProducts:
+        CreateProducts:
+          type: object
+          required:
+            - id 
+            - title
+            - description
+            - code
+            - price
+            - status
+            - stock 
+            - category
+            - thumbnail
+          properties:
+            id:
+              type: String
+              description: Identificador del producto
+            title:
+              type: String
+              description: Nombre del producto
+            description:
+              type: String
+              description: Descripción del producto
+            code:
+              type: Number
+              description: Código del producto
+            price:
+              type: Number
+              description: Precio del producto
+            status:
+              type: String
+              description: Estado "Activo/Inactivo" del producto
+            stock:
+              type: Number
+              description: Disponibilidad del producto
+            category:
+              type: String
+              description: Categoría del producto
+            thumbnail:
+              type: String
+              description: Imagen del producto
+          example:
+            id: 10,
+            title: mantel,
+            description: mediano,
+            status: true,
+            code: 10,
+            price: 2500,
+            stock: 15,
+            category: bazar,
+            thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU
+        DeleteId:
+          type: object
+          required:
+            - id 
+          properties: 
+            id:
+              type: String
+              description: Identificador del producto
+          example:
+            id: 65e0a06c98e01b462bfa985a
+        UpdateData:
+          type: object
+          required:
+            - id 
+            - title
+            - description
+            - code
+            - price
+            - status
+            - stock 
+            - category
+            - thumbnail
+          properties:
+            id:
+              type: String
+              description: Identificador del producto
+            title:
+              type: String
+              description: Nombre del producto
+            description:
+              type: String
+              description: Descripción del producto
+            code:
+              type: Number
+              description: Código del producto
+            price:
+              type: Number
+              description: Precio del producto
+            status:
+              type: String
+              description: Estado "Activo/Inactivo" del producto
+            stock:
+              type: Number
+              description: Disponibilidad del producto
+            category:
+              type: String
+              description: Categoría del producto
+          example:
+            id: 10,
+            title: mantel,
+            description: mediano,
+            status: true,
+            code: 10,
+            price: 2500,
+            stock: 15,
+            category: bazar
+        GetAllProducts:
           type: array
-        required: 
-          -id 
-          -title
-          -description
-          -code
-          -price
-          -status
-          -stock 
-          -category
-          -thumbnail
-        properties:
-          id:
-            type: String
-            description: Identificador del producto
-          title:
-            type: String
-            description: Nombre del producto
-          description:
-            type: String
-            description: Descripción del producto
-          code:
-            type: Number
-            description: Código del producto
-          price:
-            type: Number
-            description: Precio del producto
-          status:
-            type: String
-            description: Estado "Activo/Inactivo" del producto
-          stock:
-            type: Number
-            description: Disponibilidad del producto
-          category:
-            type: String
-            description: Categoría del producto
-          thumbnail:
-            type: String
-            description: Imagen del producto
-        example:
-          id: 10,
-          title: mantel,
-          description: mediano,
-          status: true,
-          code: 10,
-          price: 2500,
-          stock: 15,
-          category: bazar,
-          thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU
+          required: 
+            - id 
+            - title
+            - description
+            - code
+            - price
+            - status
+            - stock 
+            - category
+            - thumbnail
+          properties:
+            id:
+              type: String
+              description: Identificador del producto
+            title:
+              type: String
+              description: Nombre del producto
+            description:
+              type: String
+              description: Descripción del producto
+            code:
+              type: Number
+              description: Código del producto
+            price:
+              type: Number
+              description: Precio del producto
+            status:
+              type: String
+              description: Estado "Activo/Inactivo" del producto
+            stock:
+              type: Number
+              description: Disponibilidad del producto
+            category:
+              type: String
+              description: Categoría del producto
+            thumbnail:
+              type: String
+              description: Imagen del producto
+          example:
+            id: 10,
+            title: mantel,
+            description: mediano,
+            status: true,
+            code: 10,
+            price: 2500,
+            stock: 15,
+            category: bazar,
+            thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU
       Carts:
         CreateCart:
           type: object
           required:
-            -_id
-            -products
-            -__v
+            - _id
+            - products
+            - __v
           properties:
             _id:
               type: String
@@ -73,18 +179,138 @@ components:
             _id: 65de7d5b1b8e52b4e8750ef4,
             products: array,
             __v: 0
+        AddProductInCart:
+          type: object
+          required:
+            - idCart
+            - idProd
+          properties:
+            idCart: 
+              type: String
+              description: identificador del carrito
+            idProd: 
+              type: String
+              description: identificador del producto
+          example:
+            idCart: 65de9a9fcca4ff6118d3a177,
+            idProd: 6570dbd81206a3d6aee59d00
+        GetAllCarts:
+          type: object
+          required:
+            - products
+            - quantity
+            - _id
+          properties:
+            products:
+              type: array
+              description: Contenido del carrito
+            quantity:
+              type: Number
+              description: Cantidad de unidades del producto
+            _id:
+              type: String
+              description: Identificador del producto
+          example:
+            products: array,
+            quantity: 15,
+            _id: 65de7d5b1b8e52b4e8750ef4
+        GetCartById:
+          type: object
+          required:
+            - _id
+            - products
+            - __v
+          properties:
+            _id:
+              type: String
+              description: Identificador del producto
+            products: 
+              type: array
+              description: El contenido del carrito
+            __v:
+              type: Number
+              description: version de la última modificación en la base de datos
+          example:
+            _id: 65b80b87596f07043002c5a2,
+            products: array,
+            __v: 0
+        DeleteCart:
+          type: object
+          required:
+            - _id
+            - products
+            - __v
+          properties:
+            _id: 
+              type: String
+              description: Identificador del carrito
+            products: 
+              type: array
+              description: El contenido del carrito
+            __v:
+              type: Number
+              description: version de la última modificación en la base de datos
+          example:
+            _id: 65b80b87596f07043002c5a2,
+            products: array,
+            __v: 0
+        DeleteProdInCart:
+          type: object
+          required:
+            - product
+            - quantity
+          properties:
+            product: 
+              type: String
+              description: Identificador del producto.
+            quantity:
+              type: Number
+              description: Cantidad de unidades actuales del producto
+          example:
+            product: 6570dbd81206a3d6aee59d00,
+            quantity": 10
+        UpdateProd:
+          type: object
+          required:
+            - products
+            - product
+            - quantity
+          properties:
+            products:
+              type: array
+              description: El contenido del carrito
+            product: 
+              type: String
+              description: El identificador del producto
+            quantity:
+              type: Number
+              description: La cantidad de unidades del producto.
+          example:
+            products: array,
+            product: 6570dc0c1206a3d6aee59d0f,
+            quantity: 8
+        UpdateQuantityinProd:
+          type: object
+          required:
+            - quantity
+          properties:
+            quantity:
+              type: Number
+              description: La cantidad de productos a modificar en la base de datos.
+          example:
+            quantity: 20
       ProductNewPost:
         type: object
         required: 
-          -id 
-          -title
-          -description
-          -code
-          -price
-          -status
-          -stock 
-          -category
-          -thumbnail
+          - id 
+          - title
+          - description
+          - code
+          - price
+          - status
+          - stock 
+          - category
+          - thumbnail
         properties:
           id:
             type: String
@@ -123,4 +349,3 @@ components:
           stock: 15,
           category: bazar,
           thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU
-

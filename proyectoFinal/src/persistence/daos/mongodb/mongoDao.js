@@ -31,7 +31,7 @@ export default class MongoDao {
         }
     }
 
-    async update(id, obj) {
+    async update(obj, id) {
         try {
             await this.model.updateOne({ _id: id }, obj);
             return obj;
