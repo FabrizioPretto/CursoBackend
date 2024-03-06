@@ -2,7 +2,7 @@ export const info = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'API News',
+            title: 'API de Tienda',
             version: '1.0.0',
             description: 'Api de gestión y venta de productos'
         },

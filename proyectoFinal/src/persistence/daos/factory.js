@@ -40,7 +40,8 @@ switch (persistence) {
         console.log(persistence);
         break;
     default:
-        prodDao = new ProductManagerFS('./src/persistence/daos/fileSystem/productManager.js')
+        prodDao = new ProductMongoDao();
+        //prodDao = new ProductManagerFS('./src/persistence/daos/fileSystem/productManager.js')
         break;
 }
 

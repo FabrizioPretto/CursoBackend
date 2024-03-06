@@ -67,6 +67,7 @@ const PORT = process.env.PORT || 8080;
 const httpServer = app.listen(PORT, () =>
     console.log(`Server ok on port ${PORT}`));
 
+
 const socketServer = new Server(httpServer);
 
 //const products = [];
@@ -83,9 +84,9 @@ socketServer.on('connection', (socket) => {
     })
 
     //socket.emit('offer',)
-
 });
 
+export default app;
 
 /*
 OLD

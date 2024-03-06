@@ -33,14 +33,6 @@ export default class ProductMongoDao extends MongoDao {
         }
     }
 
-    /*async deleteProduct() {
-        try {
-            
-        } catch (error) {
-            console.log(error);
-        }
-    }*/
-
     async getMaxId() {
         try {
             const products = await this.getProducts();
@@ -84,41 +76,44 @@ export default class ProductMongoDao extends MongoDao {
         }
     }
 
-    async aggregationByLimit(docLimit) {
-        try {
-            if (docLimit === undefined || docLimit === 0 || docLimit === null) docLimit = 10//|| docLimit isNan
-
-            return await ProductsModel.aggregate([
-                {
-                    $limit: docLimit
-                }
-            ])
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async aggregationBySort(order) {
-        try {
-            if (order !== null) {
-                if (order === "asc") {
-                    return await ProductsModel.aggregate([
-                        {
-                            $sort: { price: 1 }
-                        }
-                    ])
-                }
-                else {
-                    return await ProductsModel.aggregate([
-                        {
-                            $sort: { price: -1 }
-                        }
-                    ])
-                }
-            }
-            else return await ProductsModel.find({});
-        } catch (error) {
-            console.log(error);
-        }
-    }
 }
+
+
+/*
+        async aggregationByLimit(docLimit) {
+            try {
+                if (docLimit === undefined || docLimit === 0 || docLimit === null) docLimit = 10//|| docLimit isNan
+    
+                return await ProductsModel.aggregate([
+                    {
+                        $limit: docLimit
+                    }
+                ])
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    
+        async aggregationBySort(order) {
+            try {
+                if (order !== null) {
+                    if (order === "asc") {
+                        return await ProductsModel.aggregate([
+                            {
+                                $sort: { price: 1 }
+                            }
+                        ])
+                    }
+                    else {
+                        return await ProductsModel.aggregate([
+                            {
+                                $sort: { price: -1 }
+                            }
+                        ])
+                    }
+                }
+                else return await ProductsModel.find({});
+            } catch (error) {
+                console.log(error);
+            }
+        }*/
