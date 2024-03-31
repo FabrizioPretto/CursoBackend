@@ -41,6 +41,7 @@ switch (persistence) {
         break;
     default:
         prodDao = new ProductMongoDao();
+        cartDao = new CartDaoMongoDB();
         //prodDao = new ProductManagerFS('./src/persistence/daos/fileSystem/productManager.js')
         break;
 }

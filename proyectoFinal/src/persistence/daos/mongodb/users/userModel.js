@@ -18,13 +18,17 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        default: '1234'
-        /*required: true,
-        default: ''*/
+        //default: '1234',
+        required: true,
     },
     role: {
         type: String,
-        default: 'user'
+        default: 'user',
+        required: true
+    },
+    last_connection: {
+        type: Date,
+        default: Date.now
     },
     isGithub: {
         type: Boolean,

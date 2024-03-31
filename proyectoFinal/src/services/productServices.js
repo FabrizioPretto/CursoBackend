@@ -4,6 +4,7 @@ const { prodDao } = factory;
 import ProductRepository from "../repository/productRepository.js";
 const prodRepository = new ProductRepository();
 import { generateMockProducts } from '../utils/utils.js';
+import { sendMails } from "./emailServices.js";
 
 export default class ProductService extends Services {
 
@@ -61,8 +62,9 @@ export default class ProductService extends Services {
         }
     }
 
-    createProduct = async (obj) => {
+    createProduct = async (obj, email) => {
         try {
+            obj.user_role = email;
             const newProd = await prodDao.addProduct(obj);
             if (newProd === false) return false;
             else return newProd;
@@ -81,15 +83,25 @@ export default class ProductService extends Services {
         }
     }
 
-    deleteProduct = async (id) => {
+    deleteProduct = async (id, user) => {
         try {
             const prodDelete = await prodDao.delete(id);
             if (prodDelete === false) return false;
             else return prodDelete;
         } catch (error) {
+
+        }
+    }
+
+    sendPremiumMail = async (user, id) => {
+        try {
+            let prodTitle = await prodDao.getProductById(id);
+            sendMails(user, 'premiumMail', prodTitle.title);
+        } catch (error) {
             throw new Error(error);
         }
     }
+
 
     aggregationBySort = async (order) => {
         try {

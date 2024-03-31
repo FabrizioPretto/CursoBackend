@@ -3,6 +3,8 @@ export default class ProductResDTO {
         this.nameProd = product.title,
             this.descriptionProd = product.description,
             this.priceProd = product.price,
-            this.stockProd = product.stock
+            this.stockProd = product.stock,
+            this.user = product.user,
+            this.role = product.role
     }
 }

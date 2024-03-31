@@ -9,7 +9,11 @@ const router = Router();
 
 router.post('/register', controllers.register);
 router.post('/login', controllers.login);
+router.get('/getAllUsers', checkToken, controllers.getUsersDto);
+router.delete('/deleteUsers', checkToken, controllers.deleteUsers);
 router.get('/profile', checkToken, controllers.profile);//FUNCIONA EN HANDLEBARS
+router.post('/reset-password', checkToken, controllers.resetPassword);
+router.put('/new-password', checkToken, controllers.updatePassword);
 
 /*router.post('/register', passport.authenticate('signup'), controller.registerResponse);
 router.post('/login', passport.authenticate('login'), controller.loginResponse);

@@ -1,11 +1,15 @@
 import { createHash, isValidPass } from '../../../../utils/utils.js';
 import MongoDao from "../mongoDao.js";
 import { UserModel } from "./userModel.js";
+import { generateToken } from '../../../../jwt/auth.js';
+
 
 export default class UserMongoDao extends MongoDao {
     constructor() {
         super(UserModel);
     }
+
+
 
     async getUserByEmail(email) {
         try {
@@ -63,6 +67,58 @@ export default class UserMongoDao extends MongoDao {
             console.log(error);
         }
     }
+
+
+
+    async resetPassword(user) {
+        try {
+            const { email } = user;
+            const userExist = await this.getUserByEmail(email);
+            if (userExist) return generateToken(userExist, "1h");
+            else return false;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async updatePassword(password, user) {
+        try {
+            const isEqual = isValidPass(password, user);
+            if (isEqual) return false;
+            else {
+                const newPass = createHash(password);
+                return await this.update(user._id, { password: newPass });
+            }
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async updateLastConnection(user_id) {
+        try {
+            await this.model.findByIdAndUpdate(user_id, { last_connection: new Date() });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async deleteUsers() {
+        try {
+            const usersToDelete = [];
+            let dateToCompare = new Date();
+            const usersArray = await this.getAll();
+            usersArray.map((user) => {
+                let dif = dateToCompare - user.last_connection;
+                dif = Math.floor(dif / (1000 * 60 * 60 * 24));
+                if (dif > 2) usersToDelete.push(user);
+            })
+            await this.model.deleteMany({ _id: { $in: usersToDelete.map((user) => user._id) } });
+            return usersToDelete;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
 }
 
 

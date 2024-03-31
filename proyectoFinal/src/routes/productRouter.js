@@ -1,6 +1,8 @@
 import { Router } from "express";
 import ProductController from '../controllers/productControllers.js'
+import { userKind } from "../middlewares/userKind.js";
 const prodController = new ProductController()
+
 //import * as controller from "../controllers/productControllers.js";
 
 const router = Router();
@@ -11,13 +13,13 @@ router.get('/:limit', prodController.aggregationByLimit);
 
 router.get('/', prodController.getAllProducts);
 
-router.post('/', prodController.createProduct);
+router.post('/', userKind, prodController.createProduct);
 
 router.get("/:id", prodController.getProductById);
 
-router.delete('/:id', prodController.deleteProduct);
+router.delete('/:id', userKind, prodController.deleteProduct);
 
-router.put('/:id', prodController.updateProduct);
+router.put('/:id', userKind, prodController.updateProduct);
 
 router.get('/dto/:id', prodController.getProdById);
 

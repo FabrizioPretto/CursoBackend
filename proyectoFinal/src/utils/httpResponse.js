@@ -26,8 +26,12 @@ export const errorsDictionary = {
     //Users
     ERROR_USER_EXISTS: 'User already exists',
     ERROR_LOGIN: 'Error login/generate token',
+    ERROR_TOKEN: 'Error generating token',
+    ERROR_PASSWORD: 'Error updating password',
+    ERROR_USERS: 'Error deleting users',
+    ERROR_ROLE: 'Error unhautorized role',
     //Tickets
-    ERROR_GENERATE_TICKET: 'Error generate ticket'
+    ERROR_GENERATE_TICKET: 'Error generating ticket'
 }
 
 

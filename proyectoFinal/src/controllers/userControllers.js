@@ -17,8 +17,8 @@ export default class UserController extends Controllers {
 
     register = async (req, res, next) => {
         try {
-            const { first_name, last_name, email, age, password } = req.body;
-            const user = { first_name, last_name, email, age, password };
+            const { first_name, last_name, email, age, role, password } = req.body;
+            const user = { first_name, last_name, email, age, role, password };
             const newUser = await userServices.register(user);
             if (!newUser) return httpResponse.Forbidden(res, errorsDictionary.ERROR_USER_EXISTS); //createResponse(res, 404, 'User already exists');
             else return httpResponse.Ok(res, newUser);
@@ -31,10 +31,14 @@ export default class UserController extends Controllers {
         try {
             //const { email, password } = req.body;
             const token = await userServices.login(req.body);
-            console.log("user controller:::", token);
+            const { email } = req.body;
+            let user_id = await userServices.getUserByEmail(email);
+            if (!user_id) return httpResponse.Unauthorized(res, errorsDictionary.ERROR_LOGIN);
+            else await userServices.updateLastConnection(user_id);
             if (!token) return httpResponse.Unauthorized(res, errorsDictionary.ERROR_LOGIN); //createResponse(res, 404, 'Error login/generate token');
             else {
                 //const access_token = generateToken(user);
+                res.cookie('token', token, { httpOnly: true });
                 return httpResponse.Ok(res, token);
                 //res.header('Authorization', token).json({ msg: "Login Ok", token });
                 //createResponse(res, 200, token);
@@ -45,7 +49,27 @@ export default class UserController extends Controllers {
     }
 
 
-    //Actualizar
+    getUsersDto = async (req, res, next) => {
+        try {
+            const info = await userServices.getUsersDTO();
+            if (!info) return httpResponse.Forbidden(res, errorsDictionary.ERROR_USER_EXISTS);
+            else return httpResponse.Ok(res, info);
+        } catch (error) {
+            next(error.message);
+        }
+    }
+
+    deleteUsers = async (req, res, next) => {
+        try {
+            const response = await userServices.deleteUsers();
+            if (!response) return httpResponse.NotFound(res, errorsDictionary.ERROR_USERS);
+            else return httpResponse.Ok(res, response);
+        } catch (error) {
+            next(error.message);
+        }
+    }
+
+    //Actualizar no funciona
     profile = async (req, res, next) => {
         try {
             const info = await userServices.getUserDTO(req.session.passport.user) //userServices.getById(req.session.passport.user);
@@ -54,9 +78,6 @@ export default class UserController extends Controllers {
             next(error.message);
         }
     };
-
-
-
 
 
     registerResponse = async (req, res, next) => {
@@ -78,6 +99,37 @@ export default class UserController extends Controllers {
 
         } catch (error) {
             next(error.message)
+        }
+    }
+
+    resetPassword = async (req, res, next) => {
+        try {
+            const user = req.user;
+            const tokenResetPassword = await userServices.resetPassword(user);
+            console.log("tokenPass: ", tokenResetPassword);
+            if (tokenResetPassword) {
+                res.cookie("tokenPass", tokenResetPassword);
+
+                return httpResponse.Ok(res, { msg: "Reset email was sent" });
+            }
+            else return httpResponse.NotFound(res, "Email not sent");
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async updatePassword(req, res, next) {
+        try {
+            const user = req.user;
+            const { password } = req.body;
+            const { tokenPass } = req.cookies;
+            console.log("El token desde Controller: ", tokenPass);
+            if (!tokenPass) return httpResponse.Forbidden(res, errorsDictionary.ERROR_TOKEN);
+            const updatedPass = await userServices.updatePassword(password, user);
+            if (updatedPass) return httpResponse.NotFound(res, errorsDictionary.ERROR_PASSWORD);
+            res.clearCookie("tokenPass");
+        } catch (error) {
+            next(error.message);
         }
     }
 

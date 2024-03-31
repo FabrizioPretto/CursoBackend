@@ -96,7 +96,9 @@
         "status": true,
         "stock": "50",
         "category": "bazar",
-        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp2jPIc5dD7dcJykaRPsPkYSO30GZ5gWlLMA"
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp2jPIc5dD7dcJykaRPsPkYSO30GZ5gWlLMA",
+        "user": "fgpretto@gmail.com",
+        "role": "premium"
     },
     {
         "id": 10,
@@ -107,7 +109,9 @@
         "status": true,
         "stock": "50",
         "category": "bazar",
-        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcv0O9pnrzk6pxmq9zi_Wgia9RWr3Ggj7ufA"
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcv0O9pnrzk6pxmq9zi_Wgia9RWr3Ggj7ufA",
+        "user": "fgpretto@gmail.com",
+        "role": "premium"
     },
     {
         "id": 11,
@@ -118,6 +122,8 @@
         "price": "2500",
         "stock": "15",
         "category": "bazar",
-        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU"
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fqNctbH-3InI1fsCGdV2iI0mnT-ZdaUhSA&usqp=CAU",
+        "user": "fgpretto@gmail.com",
+        "role": "premium"
     }
 ]

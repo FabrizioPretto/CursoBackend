@@ -4,6 +4,8 @@ import ProductService from "../services/productServices.js";
 const productService = new ProductService();
 import { HttpResponse, errorsDictionary } from "../utils/httpResponse.js";
 const httpResponse = new HttpResponse();
+import UserServices from "../services/userServices.js";
+const userServices = new UserServices();
 
 export default class ProductController extends Controllers {
     constructor() {
@@ -47,7 +49,7 @@ export default class ProductController extends Controllers {
 
     createProduct = async (req, res, next) => {
         try {
-            const newProd = await productService.createProduct(req.body);
+            const newProd = await productService.createProduct(req.body, req.user.email);
             if (newProd === false) return httpResponse.NotFound(res, errorsDictionary.ERROR_CREATE_PRODUCT);//res.status(404).json({ msg: "Error create product!" });
             else return httpResponse.Ok(res, newProd)//res.status(200).json(newProd);
         } catch (error) {
@@ -69,9 +71,19 @@ export default class ProductController extends Controllers {
     deleteProduct = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const prodDel = await productService.deleteProduct(id);
-            if (prodDel === false) return httpResponse.NotFound(res, errorsDictionary.ERROR_DELETE_PRODUCT) //res.status(404).json({ msg: "Error delete product!" });
-            else return httpResponse.Ok(res, prodDel); //res.status(200).json(prodDel);
+            const existProd = await productService.getProdById(id)
+            if (!existProd) return httpResponse.NotFound(res, errorsDictionary.ERROR_DELETE_PRODUCT)
+            else {
+                if (req.user.role != 'admin') return httpResponse.Unauthorized(res, errorsDictionary.ERROR_ROLE);
+                else {
+                    if (existProd.role === 'premium') {
+                        let userPremium = await userServices.getUserByEmail(existProd.user);
+                        await productService.sendPremiumMail(userPremium, id);
+                    }
+                    const prodDel = await productService.deleteProduct(id);
+                    return httpResponse.Ok(res, prodDel);
+                }
+            }
         } catch (error) {
             next(error);
         }
