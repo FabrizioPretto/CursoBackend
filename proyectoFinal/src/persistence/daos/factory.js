@@ -18,6 +18,7 @@ let cartDao;
 let ticketDao;
 let persistence = process.argv[2];
 
+
 switch (persistence) {
     case "FS":
         prodDao = new ProductManagerFS('./src/persistence/daos/fileSystem/productManager.js')
