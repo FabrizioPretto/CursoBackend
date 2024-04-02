@@ -1,31 +1,22 @@
 import jwt from 'jsonwebtoken';
-//import { PRIVATE_KEY } from "../jwt/auth.js";
 import UserMongoDao from '../persistence/daos/mongodb/users/userDao.js';
-const userDao = new UserMongoDao();
-//import factory from "../persistence/daos/factory.js";
-//const { userDao } = factory;
 import 'dotenv/config';
+import { HttpResponse, errorsDictionary } from '../utils/httpResponse.js';
 
+const userDao = new UserMongoDao();
 const SECRET_KEY_JWT = process.env.SECRET_KEY_JWT;
+const httpResponse = new HttpResponse();
+
 export const checkToken = async (req, res, next) => {
     try {
-        //req.headers("Authorization")
-        const authHeader = req.get("Authorization");
-        if (!authHeader) return res.status(401).json({ msg: "Unauthorized 1" });
-        console.log("authHeader ", authHeader);
-        const token = authHeader.split(" ")[1];
-        //ojo mayúsculas
-        console.log(token);
+        const token = req.cookies.token;
+        if (!token) return httpResponse.Unauthorized(res, errorsDictionary.ERROR_TOKEN);
         const decode = jwt.verify(token, SECRET_KEY_JWT);
-        console.log("decode ", decode);//payload
         const user = await userDao.getById(decode.userId);
-        console.log("user ", user);
-        if (!user) return res.status(401).json({ msg: "Unauthorized 2" });
+        if (!user) return httpResponse.Unauthorized(res, errorsDictionary.ERROR_USER_NOT_FOUND);
         req.user = user;
         next();
     } catch (error) {
-        console.log(error);
+        return httpResponse.Unauthorized(res, errorsDictionary.ERROR_TOKEN);
     }
 }
-
-//line 23 await userDao.getUserById(decode.userId)

@@ -120,16 +120,3 @@ export default class UserMongoDao extends MongoDao {
     }
 
 }
-
-
-/*
- async getUserById(id) {
-        try {
-            const response = await UserModel.findById(id).lean();
-            if (response) return response;
-            else return false;
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    */

@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose';
 
 export const cartSchema = new Schema({
 
+    email: { type: String },
     products: [
         {
             _id: false,

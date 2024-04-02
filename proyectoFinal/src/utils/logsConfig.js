@@ -26,12 +26,3 @@ else { logger = winston.createLogger(logConfigProd); }
 
 export { logger };
 
-/*export const levelsMessages = () => {
-    logger.error('Imprimimos error');
-    logger.warn('Imprimimos warning');
-    logger.info('Imprimimos info');
-    logger.http('Imprimimos http');
-    logger.verbose('Imprimimos verbose');
-    logger.debug('Imprimimos debug');
-    logger.silly('Imprimimos silly');
-}*/

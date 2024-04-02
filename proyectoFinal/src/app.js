@@ -70,7 +70,7 @@ const httpServer = app.listen(PORT, () =>
 
 const socketServer = new Server(httpServer);
 
-//const products = [];
+
 
 socketServer.on('connection', (socket) => {
     console.log(`Usuario conectado ${socket.id}`);
@@ -79,36 +79,10 @@ socketServer.on('connection', (socket) => {
 
     socket.on('newProduct', async (product) => {
         const newProduct = await productManager.addProduct(product);
-        //products.push(product);
+
         socketServer.emit('arrayProducts', await productManager.getProducts());
     })
 
-    //socket.emit('offer',)
 });
 
 export default app;
-
-/*
-OLD
-import productRouter from '../src/api/productRouter.js';
-import cartRouter from '../src/api/cartRouter.js';
-import viewRealTimeProductRouter from './api/viewRealTimeProductsRouter.js';
-import viewsRouter from './api/viewsRouter.js';
-import userRouter from './api/userRouter.js';
-
-//import { ProductManagerMongoDB } from "./daos/mongodb/productMongodbManager.js";
-//const productManager = new ProductManagerMongoDB();
-
-//initMongoDB();
-const secretKey = '1234';
-app.use(cookieParser(secretKey));
-
-app.use('/api/products', productRouter);
-app.use('/api/carts', cartRouter);
-app.use('/realtimeproducts', viewRealTimeProductRouter);
-app.use('/', viewsRouter);
-app.use('/users', userRouter);
-
-//const persistence = process.env.PERSISTENCE;
-
-*/

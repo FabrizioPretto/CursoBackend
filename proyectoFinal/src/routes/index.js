@@ -1,17 +1,12 @@
 import { Router } from "express";
-//const router = Router();
 
-import cartRouter from '../routes/cartRouter.js';
-import productRouter from '../routes/productRouter.js';
-import userRouter from '../routes/userRouter.js';
-import viewsRouter from '../routes/viewsRouter.js';
-import viewRealTimeProductRouter from '../routes/viewRealTimeProductsRouter.js';
-import emailRouter from '../routes/emailRouter.js';
-import smsRouter from '../routes/smsRouter.js';
-import wsRouter from '../routes/wsRouter.js';
-import ticketRouter from '../routes/ticketRouter.js';
-import mockingProductsRouter from '../routes/mockingProductsRouter.js';
-import loggerTestRouter from '../routes/loggerTestRouter.js';
+
+import cartRouter from '../routes/cart/cartRouter.js';
+import productRouter from '../routes/products/productRouter.js';
+import userRouter from '../routes/user/userRouter.js';
+import ticketRouter from '../routes/ticket/ticketRouter.js';
+import mockingProductsRouter from '../routes/products/mockingProductsRouter.js';
+
 
 export default class MainRouter {
     constructor() {
@@ -23,14 +18,8 @@ export default class MainRouter {
         this.router.use('/api/carts', cartRouter);
         this.router.use('/api/products', productRouter);
         this.router.use('/users', userRouter);
-        this.router.use('/', viewsRouter);
-        this.router.use('/realtimeproducts', viewRealTimeProductRouter);
-        this.router.use('/', emailRouter);
-        this.router.use('/', smsRouter);
-        this.router.use('/', wsRouter);
         this.router.use('/ticket', ticketRouter);
         this.router.use('/mockingproducts', mockingProductsRouter);
-        this.router.use('/loggertest', loggerTestRouter);
     }
 
     getRouter() {
@@ -38,9 +27,3 @@ export default class MainRouter {
     }
 }
 
-
-
-
-
-
-//export default router;

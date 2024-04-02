@@ -23,6 +23,7 @@ export const errorsDictionary = {
     ERROR_UPDATE_QUANTITY_IN_CART: 'Error updating product quantity in cart',
     ERROR_EMPTYING_CART: 'Error emptying cart',
     ERROR_CART_NOT_FOUND: 'Cart not found',
+    ERROR_EMPTY_CART: 'Error getting all carts',
     //Users
     ERROR_USER_EXISTS: 'User already exists',
     ERROR_LOGIN: 'Error login/generate token',
@@ -30,6 +31,7 @@ export const errorsDictionary = {
     ERROR_PASSWORD: 'Error updating password',
     ERROR_USERS: 'Error deleting users',
     ERROR_ROLE: 'Error unhautorized role',
+    ERROR_USER_NOT_FOUND: 'Error user not found',
     //Tickets
     ERROR_GENERATE_TICKET: 'Error generating ticket'
 }
