@@ -324,3 +324,168 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/NotFound'
+  /ticket:
+    post:
+      tags:
+        - Ticket
+      summary: Se crea un nuevo ticket en la base de datos
+      parameters:
+        - in: path
+          name: cartId
+          required: true
+          description: Id del carrito a buscar
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Se obtuvo el ticket de compra
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ticket'
+        '500':
+          description: Error interno del servidor.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/NotFound'
+  /api/users/register:
+    post:
+      tags:
+        - users
+      summary: Registro de nuevo usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/NewUser'
+      responses:
+        200:
+          description: Registro exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/PostUser'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+  /api/users/login:
+    post:
+      tags:
+        - users
+      summary: Login de usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/LoginUser'
+      responses:
+        200:
+          description: El usuario se logueó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/LoginUser'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+  /api/users/getAllUsers:
+    get:
+      tags:
+        - users
+      summary: Se obtienen todos los usuarios
+      responses:
+        200:
+          description: Lista de usuario registrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/GetAllUsers'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+      security:
+        - BearerAuth: []
+  /api/users/deleteUsers:
+    delete:
+      tags:
+        - users
+      summary: Elimiar usuarios inactivos
+      responses:
+        200:
+          description: Se eliminaron los usuarios inactivos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/GetAllUsers'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+      security:
+        - BearerAuth: []
+  /api/users/profile:
+    get:
+      tags:
+      - users
+      summary: Perfil del usuario
+      responses:
+        200:
+          description: Datos del perfil de usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/ProfileUser'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'

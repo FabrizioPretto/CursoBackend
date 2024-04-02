@@ -5,6 +5,6 @@ import TicketController from '../../controllers/ticket/ticketControllers.js';
 const controllers = new TicketController();
 const router = Router();
 
-router.post('/cart/:cartId', checkToken, controllers.generateTicket);
+router.post('/:cartId', checkToken, controllers.generateTicket);
 
 export default router;

@@ -8,10 +8,6 @@ import { __dirname } from "../src/utils/utils.js";
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import './passport/strategies.js';
-import passport from "passport";
-import './passport/githubStrategy.js';
-import './passport/googleStrategy.js';
 import 'dotenv/config';
 import { errorHandler } from "./middlewares/errorHandler.js";
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;//Agregué esta línea porque recibíaun error "error self signed certificate in certificate chain"
@@ -50,8 +46,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
 //antes de las rutas
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 
 app.engine("handlebars", handlebars.engine());
