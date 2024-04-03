@@ -1,24 +1,25 @@
 import { Router } from "express";
 import CartControllers from "../../controllers/cart/cartControllers.js";
 import { checkToken } from "../../middlewares/checkToken.js";
+import { verifyToken } from "../../middlewares/verifyToken.js"
 const controllers = new CartControllers();
 const router = Router();
 
-router.post('/', checkToken, controllers.createCart);
+router.post('/', verifyToken, controllers.createCart);
 
-router.post('/:idCart/product/:idProd', checkToken, controllers.addProdToCart);
+router.post('/:idCart/product/:idProd', verifyToken, controllers.addProdToCart);
 
-router.get('/', checkToken, controllers.getAllCarts);
+router.get('/', verifyToken, controllers.getAllCarts);
 
-router.get('/:id', checkToken, controllers.getByIdWithPopulate);
+router.get('/:id', verifyToken, controllers.getByIdWithPopulate);
 
-router.delete('/:cid/product/:pid', checkToken, controllers.removeProdFromCart);
+router.delete('/:cid/product/:pid', verifyToken, controllers.removeProdFromCart);
 
-router.delete('/:id', checkToken, controllers.remove);
+router.delete('/:id', verifyToken, controllers.remove);
 
-router.delete('/clearcart/:cid', checkToken, controllers.clearCart);
+router.delete('/clearcart/:cid', verifyToken, controllers.clearCart);
 
-router.put('/:cid/product/:pid', checkToken, controllers.updateProdQuantityToCart);
+router.put('/:cid/product/:pid', verifyToken, controllers.updateProdQuantityToCart);
 
 export default router;
 

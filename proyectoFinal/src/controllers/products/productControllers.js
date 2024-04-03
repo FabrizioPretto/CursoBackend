@@ -38,7 +38,7 @@ export default class ProductController extends Controllers {
     getProductById = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const product = await productService.getProductById(id);
+            const product = await productService.getProdById(id);
             if (product === false) return httpResponse.NotFound(res, errorsDictionary.PRODUCT_NOT_FOUND);
             else return httpResponse.Ok(res, product);
         } catch (error) {

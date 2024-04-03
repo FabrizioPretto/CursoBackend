@@ -35,7 +35,7 @@ export default class CartDaoMongoDB extends MongoDao {
             const response = await this.model.updateOne({ _id: existCart._id }, existCart);
             return response;
         } catch (error) {
-            logger.error("Error al agregar producto al carrito");
+            throw new Error(error.message);
 
         };
     };
@@ -60,7 +60,7 @@ export default class CartDaoMongoDB extends MongoDao {
             return updatedCart;
 
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     }
 
@@ -78,7 +78,7 @@ export default class CartDaoMongoDB extends MongoDao {
             return updatedCart;
 
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     }
 
@@ -93,7 +93,7 @@ export default class CartDaoMongoDB extends MongoDao {
             return updatedCart;
 
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     }
 }
