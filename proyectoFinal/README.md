@@ -52,7 +52,7 @@ El servidor se iniciará en el puerto especificado en la configuración.
 
 Antes de ejecutar la aplicación, configurar las  variables de entorno:
 
-REVISAR ARCHIVO .env.example
+Revisar archivo .env.example
 
 ## Documentación
 
